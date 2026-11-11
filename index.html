@@ -74,15 +74,15 @@ textarea{resize:vertical;min-height:68px}
   <div class="section"><div class="section-title">Додаткові нотатки</div><textarea id="notes" placeholder="Необов'язково: особливості нападу, обставини..."></textarea></div>
   <button class="primary" onclick="saveAttack()">Зберегти напад</button>
   
-  <div class="footer-note">© 2026 Кращих друзів на чоловіків не не міняємо Inc. Всі права захищені. </div>
+  <div class="footer-note">© 2026 Кращих друзів на чоловіків не міняємо Inc. Всі права захищені.</div>
 </section>
 
 <section id="historyPage" class="hidden">
   <div class="stats"><div class="stat"><strong id="totalCount">0</strong><span>Всього нападів</span></div><div class="stat"><strong id="averagePain">—</strong><span>Середня інтенсивність</span></div></div>
   <div class="section-title">Історія нападів</div><div id="historyList"></div>
-  <div class="section"><button class="primary" onclick="exportData()">↓ Експорт даних </button><p class="note">Експортуй резервну копію та надсилай її лікарю за потреби.</p></div>
+  <div class="section"><button class="primary" onclick="exportData()">↓ Експорт даних</button><p class="note">Експортуй резервну копію та надсилай її лікарю за потреби.</p></div>
   
-  <div class="footer-note">© 2026 Кращих друзів на чоловіків не не міняємо Inc. Всі права захищені силою кофеїну</div>
+  <div class="footer-note">© 2026 Кращих друзів на чоловіків не міняємо Inc. Всі права захищені силою кофеїну</div>
 </section>
 </main>
 
@@ -99,10 +99,10 @@ let attacks=[],customTriggers=[],customMedicines=[];
 let selectedTriggers=[],selectedLocations=[],selectedCharacters=[],selectedSymptoms=[],selectedEffect="";
 let medicationCounter=0,pendingAttack=null;
 
-const defaultTriggers=["Після нічної зміни","Недосип","Стрес","Погода","Фізичне навантаження","Голод","Пропуск прийому їжі","Зневоднення","Менструація","Яскраве світло","Сильні запахи","Тривала робота за екраном","Кофеїн","Інше"];
-const locations=["Ліва лобна область","Права лобна область","Центр лоба","Ліва скроня","Права скроня","Обидві скроні","Ліве око / очноямкова область","Праве око / очноямкова область","Область перенісся","Ліва тім'яна область","Права тім'яна область","Макішка","Лівий потилиця","Правий потилиця","Центр потилиці","Вся голова","Ліва половина голови","Права половина голови","Область обличчя","Верхня щелепа","Нижня щелепа","Шия","Потилиця та шия"];
-const characters=["Давильний","Пульсуючий","Ниючий","Гострий","Розпираючий","Стріляючий","Пекучий","Зухвалий / стискаючий","смикаючий"];
-const symptoms=["Світлобоязнь","Звукобоязнь","Нудота","Блювота","Запаморочення","Непереносимість запахів","Мушки перед очима","Зтуманений зір","Порушення зору","Оніміння","Поколювання","Слабкість","Складність концентрації","Сковність шиї"];
+const defaultTriggers=["Після нічної зміни","Недосип","Стресс","Погода","Фізичне навантаження","Голод","Пропуск прийому їжі","Зневоднення","Менструація","Яскраве світло","Сильні запахи","Тривала робота за екраном","Кофеїн","Інше"];
+const locations=["Ліва лобна область","Права лобна область","Центр лоба","Ліва скроня","Права скроня","Обидві скроні","Ліве око","Праве око","Область перенісся","Ліва тім'яна область","Права тім'яна область","Макішка","Лівий потилиця","Правий потилиця","Центр потилиці","Вся голова","Ліва половина голови","Права половина голови","Область обличчя","Верхня щелепа","Нижня щелепа","Шия","Потилиця та шия"];
+const characters=["Давильний","Пульсуючий","Ниючий","Гострий","Розпираючий","Стріляючий","Пекучий","Стискаючий","Смикаючий"];
+const symptoms=["Світлобоязнь","Звукобоязнь","Нудота","Блювота","Запаморочення","Непереносимість запахів","Мушки перед очима","Затуманений зір","Порушення зору","Оніміння","Поколювання","Слабкість","Складність концентрації","Сковність шиї"];
 const effects=["Допомогло повністю","Стало легше","Не допомогло"];
 const defaultMedicines=["Ібупрофен","Цитрамон","Парацетамол","Аспірин","Німесил","Кетадокс","Інше"];
 
@@ -209,234 +209,3 @@ function addMedication(){
    b.type="button";
    b.className="chip small";
    b.textContent=n;
-   b.onclick=()=>{
-     name.value=n==="Інше"?"":n;
-     chips.querySelectorAll("button").forEach(x=>x.classList.remove("active"));
-     b.classList.add("active");
-     if(n==="Інше")name.focus();
-   };
-   chips.appendChild(b);
- });
- 
- const time=document.createElement("input");time.type="datetime-local";time.className="med-time";time.value=localDateTime();
- const dose=document.createElement("input");dose.type="number";dose.min="0";dose.step="any";dose.placeholder="Кількість (наприклад, 1)";dose.className="med-amount";
- const unit=document.createElement("input");unit.type="text";unit.placeholder="Одиниця (наприклад, таблетка або мг)";unit.className="med-unit";
- 
- const label1=document.createElement("label");label1.className="field-label";label1.style.marginTop="10px";label1.textContent="Час прийому";
- const label2=document.createElement("label");label2.className="field-label";label2.style.marginTop="10px";label2.textContent="Прийнята кількість";
- const label3=document.createElement("label");label3.className="field-label";label3.style.marginTop="10px";label3.textContent="Дозування / примітка (необов'язково)";
- const note=document.createElement("input");note.type="text";note.placeholder="Наприклад, 400 мг";note.className="med-dose-note";
- 
- card.append(head,chips,name,label1,time,label2,dose,unit,label3,note);
- document.getElementById("medications").appendChild(card);
-}
-
-function collectMedications(){
-  const list=[];
-  document.querySelectorAll(".med-card").forEach(card=>{
-    const name=card.querySelector(".med-name").value.trim();
-    if(!name)return;
-    const rawAmount = card.querySelector(".med-amount").value;
-    const parsedAmount = rawAmount==="" ? null : Number(rawAmount);
-    
-    list.push({
-      name,
-      time:card.querySelector(".med-time").value,
-      amount: parsedAmount,
-      unit:card.querySelector(".med-unit").value.trim(),
-      doseNote:card.querySelector(".med-dose-note").value.trim()
-    });
-    if(!defaultMedicines.includes(name)&&!customMedicines.includes(name))customMedicines.push(name);
-  });
-  return list;
-}
-
-function saveAttack(){
- const start=document.getElementById("startTime").value,end=document.getElementById("endTime").value;
- if(!start){alert("Вкажи час початку нападу.");return}
- if(end&&new Date(end)<new Date(start)){alert("Закінчення не може бути раніше початку.");return}
- const meds=collectMedications();
- for(const m of meds){
-   if(!m.time){alert("Вкажи час прийому для препарату "+m.name+".");return}
-   if(m.amount!==null&&(isNaN(m.amount)||m.amount<0)){alert("Перевір коректність кількості препарату "+m.name+".");return}
- }
- let triggers=selectedTriggers.filter(x=>x!=="Інше"),custom=document.getElementById("customTrigger").value.trim();
- if(custom&&!triggers.includes(custom)){
-   triggers.push(custom);
-   if(!customTriggers.includes(custom))customTriggers.push(custom);
- }
- 
- const newAttack={
-   id:Date.now().toString()+Math.random().toString(36).slice(2,7),
-   start,
-   end:end||null,
-   triggers,
-   locations:[...selectedLocations],
-   characters:[...selectedCharacters],
-   symptoms:[...selectedSymptoms],
-   intensity:Number(document.getElementById("intensity").value),
-   medications:meds,
-   effect:selectedEffect,
-   notes:document.getElementById("notes").value.trim(),
-   created:new Date().toISOString()
- };
- 
- attacks.unshift(newAttack);
- persist();
- resetForm();
- showToast("Напад збережено");
- renderHistory();
- showPage("history");
-}
-
-function resetForm(){
-  selectedTriggers=[];selectedLocations=[];selectedCharacters=[];selectedSymptoms=[];selectedEffect="";
-  document.getElementById("startTime").value=localDateTime();
-  document.getElementById("endTime").value="";
-  document.getElementById("notes").value="";
-  document.getElementById("customTrigger").value="";
-  document.getElementById("intensity").value=5;
-  document.getElementById("intensityValue").textContent="5";
-  document.getElementById("intensityHint").textContent=getIntensityText(5);
-  document.getElementById("medications").innerHTML="";
-  document.getElementById("customTriggerBox").classList.add("hidden");
-  renderAllChips();
-}
-
-function renderHistory(){
- const box=document.getElementById("historyList");
- box.innerHTML="";
- document.getElementById("totalCount").textContent=attacks.length;
- const avg=attacks.length?attacks.reduce((s,a)=>s+Number(a.intensity||0),0)/attacks.length:0;
- document.getElementById("averagePain").textContent=attacks.length?avg.toFixed(1)+"/10":"—";
- 
- if(!attacks.length){
-   box.innerHTML='<div class="empty"><div class="empty-icon">☾</div><div>Поки немає записів</div><p>Тут з'явиться історія нападів.</p></div>';
-   return;
- }
- 
- attacks.forEach(a=>{
-  const card=document.createElement("article");card.className="history-card";
-  const head=document.createElement("div");head.className="history-head";
-  const top=document.createElement("div");top.className="history-top";
-  const date=document.createElement("div");date.className="history-date";date.textContent=formatDate(a.start);
-  const score=document.createElement("span");score.className="history-intensity";score.textContent=(a.intensity??"—")+"/10";
-  top.append(date,score);
-  const sub=document.createElement("div");sub.className="history-sub";sub.textContent=(a.locations||[]).join(", ")||"Локалізація не вказана";
-  head.append(top,sub);
-  
-  const details=document.createElement("div");details.className="history-details hidden";
-  const line=(label,value)=>{
-    const d=document.createElement("div");d.className="detail-line";
-    const s=document.createElement("strong");s.textContent=label;
-    const v=document.createElement("div");v.textContent=value||"Не вказано";
-    d.append(s,v);details.appendChild(d);
-  };
-  line("Тривалість",formatDuration(a.start,a.end));
-  line("Закінчення",a.end?formatDate(a.end):"Напад триває");
-  line("Тригери",(a.triggers||[]).join(", "));
-  line("Локалізація",(a.locations||[]).join(", "));
-  line("Характер болю",(a.characters||[]).join(", "));
-  line("Симптоми",(a.symptoms||[]).join(", "));
-  line("Інтенсивність",a.intensity+"/10");
-  line("Ліки",(a.medications||[]).map(m=>`${m.name}${m.amount!==null&&m.amount!==undefined?" · "+m.amount+" "+(m.unit||"од."):""}${m.doseNote?" · "+m.doseNote:""}${m.time?" · "+formatDate(m.time):""}`).join("; "));
-  line("Ефект",a.effect);
-  line("Нотатки",a.notes);
-  
-  const actions=document.createElement("div");actions.className="history-actions";
-  const del=document.createElement("button");del.className="danger";del.textContent="Видалити";
-  del.onclick=()=>{if(!confirm("Видалити цей запис?"))return;attacks=attacks.filter(x=>x.id!==a.id);persist();renderHistory();showToast("Запис видалено")};
-  const close=document.createElement("button");close.textContent="Згорнути";
-  close.onclick=()=>details.classList.add("hidden");
-  
-  actions.append(del,close);
-  details.appendChild(actions);
-  head.onclick=()=>details.classList.toggle("hidden");
-  card.append(head,details);
-  box.appendChild(card);
- });
-}
-
-function exportData(){
-  if(!attacks.length){alert("Немає даних для експорту.");return}
-  const data={application:"Щоденник головного болю",exportDate:new Date().toISOString(),totalAttacks:attacks.length,attacks};
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;
-  a.download="headache-diary-"+new Date().toISOString().slice(0,10)+".json";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1500);
-}
-
-function showPage(page){
-  ["form","history"].forEach(p=>{
-    document.getElementById(p+"Page").classList.toggle("hidden",p!==page);
-    document.getElementById("nav"+p[0].toUpperCase()+p.slice(1)).classList.toggle("active",p===page);
-  });
-  if(page==="history")renderHistory();
-  window.scrollTo({top:0,behavior:"instant"});
-}
-
-let toastTimer;
-function showToast(message){
-  const el=document.getElementById("toast");
-  el.textContent=message;
-  el.classList.remove("hidden");
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.add("hidden"),2200);
-}
-
-const intensityHints = {
-    low: [
-        "1 · Ледь помітно",
-        "2 · Фоновий дискомфорт",
-        "3 · Терпимо, але неприємно"
-    ],
-    mid: [
-        "4 · Починає заважати справам",
-        "5 · Відчутний біль, потрібен відпочинок",
-        "6 · Сильний біль, важко зосередитися"
-    ],
-    high: [
-        "7 · Дуже боляче, все дратує",
-        "8 · Інтенсивний біль, складно терпити",
-        "9 · Майже нестерпно"
-    ],
-    extreme: [
-        "10 · Максимальний біль, потрібен спокій"
-    ]
-};
-
-function getIntensityText(val) {
-    if (val <= 3) return intensityHints.low[val - 1];
-    if (val <= 6) return intensityHints.mid[val - 4];
-    if (val <= 9) return intensityHints.high[val - 7];
-    return intensityHints.extreme[0];
-}
-
-const intensityInput = document.getElementById("intensity");
-const intensityValue = document.getElementById("intensityValue");
-const intensityHint = document.getElementById("intensityHint");
-
-intensityInput.addEventListener("input", e => {
-    const val = Number(e.target.value);
-    intensityValue.textContent = val;
-    intensityHint.textContent = getIntensityText(val);
-});
-
-intensityHint.textContent = getIntensityText(Number(intensityInput.value));
-
-loadData();
-document.getElementById("startTime").value=localDateTime();
-renderAllChips();
-renderHistory();
-
-if("serviceWorker" in navigator && location.protocol!=="file:"){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(err=>console.warn("SW error:",err)));
-}
-</script>
-</body>
-</html>
