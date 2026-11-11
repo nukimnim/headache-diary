@@ -260,7 +260,51 @@ function startBreathing(){if(breathRunning)return;breathRunning=true;let elapsed
  const tick=()=>{if(!breathRunning)return;const pos=elapsed%10;const inhale=pos<4;phase.textContent=inhale?"Мягкий вдох":"Медленный выдох";count.textContent=(total-elapsed)+" сек.";status.textContent=inhale?"Вдыхай спокойно, без усилия":"Плавно выдыхай, не форсируя дыхание";circle.classList.toggle("expand",inhale);if(elapsed>=total){stopBreathing();phase.textContent="Готово";count.textContent="1 минута";status.textContent="Вернись к обычному дыханию.";return}elapsed++};
  tick();breathTimer=setInterval(tick,1000)}
 function stopBreathing(){breathRunning=false;if(breathTimer)clearInterval(breathTimer);breathTimer=null;const b=document.getElementById("breathStart");if(b)b.disabled=false;const c=document.getElementById("breathCircle");if(c)c.classList.remove("expand");const p=document.getElementById("breathPhase");if(p)p.textContent="Пауза";const n=document.getElementById("breathCount");if(n)n.textContent="Можно остановиться"}
-document.getElementById("intensity").addEventListener("input",e=>document.getElementById("intensityValue").textContent=e.target.value);
+/* ==========================
+   ПОЛЗУНОК БОЛИ С ХАРАКТЕРОМ
+========================== */
+
+const intensityHints = {
+    low: [
+        "1 · Хуйня",
+        "2 · Ну такое, пока слабенько",
+        "3 · О, ну уже хоть что-то"
+    ],
+    mid: [
+        "4 · Мммм, херовенько уже, да?",
+        "5 · А сецчас еще хуже?))",
+        "6 · О, а уже весело, ты там только не здыхай пока"
+    ],
+    high: [
+        "7 · Глаз дёргается, и все бесит`",
+        "8 · Ох нихуя, и ты до сих пор жива?",
+        "9 · Ну ебать,почти очко, постарайся, постарайся"
+    ],
+    extreme: [
+        "10 · Ох ееееба ты киборг-терпила"
+    ]
+};
+
+function getIntensityText(val) {
+    if (val <= 3) return intensityHints.low[val - 1];
+    if (val <= 6) return intensityHints.mid[val - 4];
+    if (val <= 9) return intensityHints.high[val - 7];
+    return intensityHints.extreme[0];
+}
+
+const intensityInput = document.getElementById("intensity");
+const intensityValue = document.getElementById("intensityValue");
+const intensityHint = document.getElementById("intensityHint");
+
+intensityInput.addEventListener("input", e => {
+    const val = Number(e.target.value);
+    intensityValue.textContent = val;
+    intensityHint.textContent = getIntensityText(val);
+});
+
+// Инициализация текста при загрузке
+intensityHint.textContent = getIntensityText(Number(intensityInput.value));
+
 loadData();document.getElementById("startTime").value=localDateTime();renderAllChips();renderHistory();renderRules();
 if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(err=>console.warn("Service Worker не зарегистрирован:",err)))}
 </script>
