@@ -80,7 +80,7 @@ textarea{resize:vertical;min-height:68px}
 <section id="historyPage" class="hidden">
   <div class="stats"><div class="stat"><strong id="totalCount">0</strong><span>Всього нападів</span></div><div class="stat"><strong id="averagePain">—</strong><span>Середня інтенсивність</span></div></div>
   <div class="section-title">Історія нападів</div><div id="historyList"></div>
-  <div class="section"><button class="primary" onclick="exportData()">↓ Експорт даних</button><p class="note">Експортуй резервну копію та надсилай її лікарю за потреби.</p></div>
+  <div class="section"><button class="primary" onclick="exportData()">↓ Експорт у таблицю (CSV)</button><p class="note">Експортуй файл та надсилай лікарю — він відкриється як зручна таблиця.</p></div>
   
   <div class="footer-note">© 2026 Кращих друзів на чоловіків не міняємо Inc. Всі права захищені силою кофеїну</div>
 </section>
@@ -362,16 +362,34 @@ function renderHistory(){
 
 function exportData(){
   if(!attacks.length){alert("Немає даних для експорту.");return}
-  const data={application:"Щоденник головного болю",exportDate:new Date().toISOString(),totalAttacks:attacks.length,attacks};
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;
-  a.download="headache-diary-"+new Date().toISOString().slice(0,10)+".json";
+  
+  // Формуємо таблицю у форматі CSV (кожна комірка розділена комами або крапкою з комою)
+  let csv = "\uFEFFДата початку;Закінчення;Інтенсивність (з 10);Тригери;Локалізація;Характер болю;Симптоми;Ліки;Ефект;Нотатки\n";
+  
+  attacks.forEach(a => {
+    const start = a.start ? a.start.replace("T", " ") : "";
+    const end = a.end ? a.end.replace("T", " ") : "Триває";
+    const intensity = a.intensity || "";
+    const triggers = (a.triggers || []).join(", ");
+    const locations = (a.locations || []).join(", ");
+    const characters = (a.characters || []).join(", ");
+    const symptoms = (a.symptoms || []).join(", ");
+    const meds = (a.medications || []).map(m => `${m.name} (${m.amount || ""} ${m.unit || ""})`).join("; ");
+    const effect = a.effect || "";
+    const notes = (a.notes || "").replace(/(\r\n|\n|\r)/gm, " "); // прибираємо переноси рядків у нотатках
+    
+    csv += `"${start}","${end}","${intensity}","${triggers}","${locations}","${characters}","${symptoms}","${meds}","${effect}","${notes}"\n`;
+  });
+
+  const blob = new Blob([csv], {type: "text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "shodennik-boli-" + new Date().toISOString().slice(0, 10) + ".csv";
   document.body.appendChild(a);
   a.click();
   a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1500);
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
 
 function showPage(page){
