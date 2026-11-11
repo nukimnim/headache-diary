@@ -54,7 +54,7 @@ textarea{resize:vertical;min-height:68px}
 </style>
 </head>
 <body>
-<header><h1>Дневник головной боли</h1><p>Приступы, симптомы, лечение и бережная самопомощь</p></header>
+<header><h1>Дневник головной боли</h1><p>Приступы, симптомы, и прочее</p></header>
 <main>
 <section id="formPage">
   <div class="section"><div class="section-title">Новый приступ</div><label class="field-label" for="startTime">Дата и время начала</label><input type="datetime-local" id="startTime"></div>
@@ -66,10 +66,10 @@ textarea{resize:vertical;min-height:68px}
     <span id="intensityHint" style="color: var(--accent); font-weight: 500;">Терпимо, но людей лучше не подпускать</span>
 </div>
 </div>
-  <div class="section"><div class="section-title">Приём лекарств</div><div id="medications"></div><button class="add-button" onclick="addMedication()">＋ Добавить обезболивающее</button><p class="note">Записывай фактическое время и количество. Приложение не назначает дозы и не заменяет инструкцию к препарату.</p></div>
+  <div class="section"><div class="section-title">Прием лекарств</div><div id="medications"></div><button class="add-button" onclick="addMedication()">＋ Добавить обезболивающее</button><p class="note">Записывай фактическое время и количество. Приложение не назначает дозы и не заменяет инструкцию к препарату.</p></div>
   <div class="section"><div class="section-title">Окончание приступа</div><div class="field"><label class="field-label" for="endTime">Когда боль полностью прошла</label><input type="datetime-local" id="endTime"><p class="note">Оставь пустым, если приступ продолжается.</p></div><label class="field-label">Общий эффект лечения</label><div class="chips" id="effectChips"></div></div>
-  <div class="section"><div class="section-title">Дополнительные заметки</div><textarea id="notes" placeholder="Необязательно: особенности приступа, обстоятельства..."></textarea></div>
-  <button class="primary" onclick="saveAttack()">Сохранить приступ</button>
+  <div class="section"><div class="section-title">Доп. заметки</div><textarea id="notes" placeholder="Необязательно: особенности приступа, обстоятельства..."></textarea></div>
+  <button class="primary" onclick="saveAttack()">Засейвить приступ</button>
 </section>
 
 <section id="historyPage" class="hidden">
@@ -80,21 +80,15 @@ textarea{resize:vertical;min-height:68px}
 
 <section id="helpPage" class="hidden">
   <div class="section"><div class="section-title">Что сделать сейчас</div><p class="note">Выбери только то, что комфортно. Не нужно выполнять всё подряд или терпеть неприятные ощущения.</p>
-    <label class="check-card"><input type="checkbox"><span>💧 Выпить немного воды, если давно не пила и нет ограничений по жидкости. Не нужно заставлять себя выпивать большой объём сразу.</span></label>
-    <label class="check-card"><input type="checkbox"><span>🌘 Приглушить свет или затемнить комнату, если свет неприятен.</span></label>
-    <label class="check-card"><input type="checkbox"><span>🔇 Уменьшить шум: тишина, беруши или комфортный негромкий фоновый звук.</span></label>
-    <label class="check-card"><input type="checkbox"><span>📵 Отложить телефон и другие экраны хотя бы на 15–20 минут, если они усиливают симптомы.</span></label>
-    <label class="check-card"><input type="checkbox"><span>🪟 Проветрить комнату, если это безопасно и не усиливает дискомфорт.</span></label>
-    <label class="check-card"><input type="checkbox"><span>🛏️ Устроиться в удобном положении и дать себе возможность спокойно отдохнуть.</span></label>
+    <label class="check-card"><input type="checkbox"><span> Надо напиться </span></label>
+    <label class="check-card"><input type="checkbox"><span> Свет потуши </span></label>
+    <label class="check-card"><input type="checkbox"><span> Заткни нахер всех </span></label>
+    <label class="check-card"><input type="checkbox"><span> Мобилку выруби </span></label>
+    <label class="check-card"><input type="checkbox"><span> Проветри тут, а то щапах такой....  Особенный</span></label>
+    <label class="check-card"><input type="checkbox"><span> СПААААААТЬ </span></label>
     <button class="secondary" onclick="resetChecklist()">Сбросить галочки</button>
   </div>
 
-  <div class="section"><div class="section-title">Мягкие техники</div>
-    <article class="tip-card"><h3>❄️ Прохладный компресс</h3><p>Попробуй прохладную влажную ткань на лбу или висках на несколько минут. Не прикладывай лёд непосредственно к коже. Убери компресс, если неприятно, появляется онемение или боль усиливается.</p></article>
-    <article class="tip-card"><h3>🌡️ Тепло для шеи и плеч</h3><p>Если чувствуешь мышечное напряжение, можно приложить комфортно тёплое, не горячее полотенце к шее или плечам. Не используй тепло, если оно усиливает пульсацию или дискомфорт.</p></article>
-    <article class="tip-card"><h3>🤲 Очень мягкий самомассаж</h3><p>Лёгкими круговыми движениями можно помассировать виски, мышцы плеч и основание черепа. Не дави сильно на глазницы, шею или болезненные участки. Точку между большим и указательным пальцами можно просто мягко размять, если это приятно. Прекрати при усилении боли.</p><p class="note">Массаж и точечное надавливание не являются доказанным способом остановить мигренозный приступ. Это необязательная техника для комфорта.</p></article>
-    <article class="tip-card"><h3>🌬️ Спокойное дыхание</h3><p>Необязательно задерживать дыхание. Попробуй мягко вдохнуть на 3–4 счёта и выдохнуть чуть дольше, например на 5–6. Повтори в комфортном темпе 1–2 минуты. Если кружится голова или становится неприятно, вернись к обычному дыханию.</p></article>
-  </div>
 
   <div class="section"><div class="section-title">Таймер спокойного дыхания</div><p class="note">Мягкий ритм без задержки дыхания. Можно остановить в любой момент.</p>
     <div class="breath-box"><div class="breath-circle" id="breathCircle"><strong id="breathPhase">Готово?</strong><small id="breathCount">1 минута</small></div><div class="breath-controls"><button class="primary" id="breathStart" onclick="startBreathing()">Начать</button><button class="secondary" onclick="stopBreathing()">Остановить</button></div><p class="note" id="breathStatus" aria-live="polite">Вдох 4 секунды · выдох 6 секунд</p></div>
