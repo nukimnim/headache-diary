@@ -29,7 +29,7 @@ textarea{resize:vertical;min-height:68px}
 .chip.active{background:var(--accent-bg);color:#e0d4f5;border-color:var(--accent)}
 .chip.small{padding:8px 11px;min-height:37px}
 .range-row{display:flex;align-items:center;gap:15px}input[type=range]{flex:1;accent-color:var(--accent);min-width:0}.range-value{min-width:42px;text-align:center;font-size:23px;font-weight:650;color:var(--accent)}.range-hints{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:5px}
-.med-card,.tip-card,.check-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:10px}
+.med-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:10px}
 .med-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.med-header strong{font-size:14px}.remove-med{border:0;background:transparent;color:var(--red);font-size:22px;padding:0 7px}
 .med-card input{margin-top:8px}.med-card .chips{margin-bottom:8px}
 .add-button,.secondary{width:100%;border:1px solid var(--border);background:var(--surface2);color:var(--text);padding:13px;border-radius:12px;min-height:46px}
@@ -37,24 +37,20 @@ textarea{resize:vertical;min-height:68px}
 .primary{width:100%;border:0;background:var(--accent);color:#1b1721;padding:15px;border-radius:13px;font-weight:700;font-size:16px;min-height:53px}
 .danger{color:var(--red)}.note{color:var(--muted);font-size:12px;margin-top:8px}.muted{color:var(--muted)}.hidden{display:none!important}
 .bottom-nav{position:fixed;z-index:20;bottom:0;left:0;right:0;padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;background:rgba(26,26,28,.97);border-top:1px solid var(--border);backdrop-filter:blur(15px)}
-.nav-item{background:transparent;border:0;color:var(--muted);padding:6px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;min-width:75px}.nav-icon{font-size:21px}.nav-item.active{color:var(--accent)}
+.nav-item{background:transparent;border:0;color:var(--muted);padding:6px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;min-width:90px}.nav-icon{font-size:21px}.nav-item.active{color:var(--accent)}
 .history-card{background:var(--surface);border:1px solid var(--border);border-radius:15px;margin-bottom:11px;overflow:hidden}
 .history-head{padding:15px;cursor:pointer}.history-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.history-date{font-weight:650}.history-intensity{background:var(--accent-bg);color:#e0d4f5;padding:5px 10px;border-radius:20px;font-size:13px;white-space:nowrap}.history-sub{color:var(--muted);font-size:12px;margin-top:7px}
 .history-details{padding:0 15px 15px;border-top:1px solid var(--border);font-size:13px}.detail-line{margin-top:12px;overflow-wrap:anywhere}.detail-line strong{display:block;color:var(--muted);font-weight:500;font-size:11px;margin-bottom:3px}
 .history-actions{display:flex;gap:8px;margin-top:15px}.history-actions button{flex:1;padding:10px;border-radius:9px;border:1px solid var(--border);background:var(--surface2);font-size:12px}
 .empty{text-align:center;color:var(--muted);padding:45px 15px}.empty-icon{font-size:34px;margin-bottom:9px}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px}.stat{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px}.stat strong{display:block;font-size:24px;color:var(--accent)}.stat span{font-size:11px;color:var(--muted)}
-.tip-card h3{font-size:15px;margin:0 0 7px}.tip-card p{font-size:13px;color:#d0d0d5;margin:0}.tip-card .note{margin-bottom:0}
-.check-card{display:flex;gap:11px;align-items:flex-start;margin-bottom:8px}.check-card input{width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto;margin:2px 0 0}.check-card span{font-size:14px}
-.breath-box{text-align:center;padding:20px 12px}.breath-circle{width:150px;height:150px;border-radius:50%;margin:15px auto;background:var(--accent-bg);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:transform 1s ease}.breath-circle strong{font-size:19px}.breath-circle small{color:var(--muted);font-size:12px}.breath-circle.expand{transform:scale(1.12)}.breath-controls{display:flex;gap:8px}.breath-controls button{flex:1}
-.warning{border:1px solid #8b7444;background:#302a1e;color:#f0dfb8;border-radius:12px;padding:13px;font-size:13px;margin:12px 0}.warning strong{display:block;margin-bottom:5px}.modal-backdrop{position:fixed;inset:0;z-index:100;background:#000a;display:flex;align-items:center;justify-content:center;padding:20px}.modal{width:100%;max-width:440px;max-height:85vh;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:17px;padding:18px}.modal h2{font-size:18px;margin:0 0 10px}.modal-actions{display:flex;gap:9px;margin-top:15px}.modal-actions button{flex:1}
+.modal-backdrop{position:fixed;inset:0;z-index:100;background:#000a;display:flex;align-items:center;justify-content:center;padding:20px}.modal{width:100%;max-width:440px;max-height:85vh;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:17px;padding:18px}.modal h2{font-size:18px;margin:0 0 10px}.modal-actions{display:flex;gap:9px;margin-top:15px}.modal-actions button{flex:1}
 .toast{position:fixed;z-index:120;bottom:calc(95px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#393342;color:white;padding:11px 17px;border-radius:25px;font-size:13px;box-shadow:0 5px 20px #0006;white-space:nowrap}
-.badge{display:inline-block;padding:3px 8px;border-radius:20px;background:#34343a;color:#c9c9cf;font-size:11px}
-@media(max-width:360px){.section{padding:13px}main{padding-left:10px;padding-right:10px}.chip{padding:9px 10px}.nav-item{min-width:65px;padding-inline:6px}}
+@media(max-width:360px){.section{padding:13px}main{padding-left:10px;padding-right:10px}.chip{padding:9px 10px}.nav-item{min-width:75px;padding-inline:6px}}
 </style>
 </head>
 <body>
-<header><h1>Дневник головной боли</h1><p>Приступы, симптомы, и прочее</p></header>
+<header><h1>Дневник головной боли</h1><p>Приступы, симптомы и состояние</p></header>
 <main>
 <section id="formPage">
   <div class="section"><div class="section-title">Новый приступ</div><label class="field-label" for="startTime">Дата и время начала</label><input type="datetime-local" id="startTime"></div>
@@ -62,10 +58,16 @@ textarea{resize:vertical;min-height:68px}
   <div class="section"><div class="section-title">Локализация боли</div><p class="note">Можно выбрать несколько участков.</p><div class="chips" id="locationChips"></div></div>
   <div class="section"><div class="section-title">Характер боли</div><div class="chips" id="characterChips"></div></div>
   <div class="section"><div class="section-title">Сопутствующие симптомы</div><div class="chips" id="symptomChips"></div></div>
-  <div class="section"><div class="section-title">Интенсивность боли</div><div class="range-row"><input type="range" id="intensity" min="1" max="10" value="5"><div class="range-value" id="intensityValue">5</div></div><div class="range-hints" style="justify-content: center; text-align: center;">
-    <span id="intensityHint" style="color: var(--accent); font-weight: 500;">Терпимо, но людей лучше не подпускать</span>
-</div>
-</div>
+  <div class="section">
+    <div class="section-title">Интенсивность боли</div>
+    <div class="range-row">
+      <input type="range" id="intensity" min="1" max="10" value="5">
+      <div class="range-value" id="intensityValue">5</div>
+    </div>
+    <div class="range-hints" style="justify-content: center; text-align: center;">
+      <span id="intensityHint" style="color: var(--accent); font-weight: 500;"></span>
+    </div>
+  </div>
   <div class="section"><div class="section-title">Прием лекарств</div><div id="medications"></div><button class="add-button" onclick="addMedication()">＋ Добавить обезболивающее</button><p class="note">Записывай фактическое время и количество. Приложение не назначает дозы и не заменяет инструкцию к препарату.</p></div>
   <div class="section"><div class="section-title">Окончание приступа</div><div class="field"><label class="field-label" for="endTime">Когда боль полностью прошла</label><input type="datetime-local" id="endTime"><p class="note">Оставь пустым, если приступ продолжается.</p></div><label class="field-label">Общий эффект лечения</label><div class="chips" id="effectChips"></div></div>
   <div class="section"><div class="section-title">Доп. заметки</div><textarea id="notes" placeholder="Необязательно: особенности приступа, обстоятельства..."></textarea></div>
@@ -77,42 +79,20 @@ textarea{resize:vertical;min-height:68px}
   <div class="section-title">История приступов</div><div id="historyList"></div>
   <div class="section"><button class="primary" onclick="exportData()">↓ Экспорт данных (JSON)</button><p class="note">Экспортируй резервную копию и отправляй её врачу при необходимости.</p></div>
 </section>
-
-<section id="helpPage" class="hidden">
-  <div class="section"><div class="section-title">Что сделать сейчас</div><p class="note">Выбери только то, что комфортно. Не нужно выполнять всё подряд или терпеть неприятные ощущения.</p>
-    <label class="check-card"><input type="checkbox"><span> Надо напиться </span></label>
-    <label class="check-card"><input type="checkbox"><span> Свет потуши </span></label>
-    <label class="check-card"><input type="checkbox"><span> Заткни нахер всех </span></label>
-    <label class="check-card"><input type="checkbox"><span> Мобилку выруби </span></label>
-    <label class="check-card"><input type="checkbox"><span> Проветри тут, а то щапах такой....  Особенный</span></label>
-    <label class="check-card"><input type="checkbox"><span> СПААААААТЬ </span></label>
-    <button class="secondary" onclick="resetChecklist()">Сбросить галочки</button>
-  </div>
-
-
-  <div class="section"><div class="section-title">Таймер спокойного дыхания</div><p class="note">Мягкий ритм без задержки дыхания. Можно остановить в любой момент.</p>
-    <div class="breath-box"><div class="breath-circle" id="breathCircle"><strong id="breathPhase">Готово?</strong><small id="breathCount">1 минута</small></div><div class="breath-controls"><button class="primary" id="breathStart" onclick="startBreathing()">Начать</button><button class="secondary" onclick="stopBreathing()">Остановить</button></div><p class="note" id="breathStatus" aria-live="polite">Вдох 4 секунды · выдох 6 секунд</p></div>
-  </div>
-
-  <div class="section"><div class="section-title">Настройки напоминаний о лекарствах</div><p class="note">Здесь можно сохранить параметры из инструкции именно к твоему препарату или назначения врача. Поля пустые по умолчанию. Это не справочник дозировок.</p><div id="medicineRules"></div><button class="add-button" onclick="addRule()">＋ Добавить препарат в базу</button><p class="note">Предупреждения являются только проверкой введённых тобой данных. Они не подтверждают, что приём безопасен.</p></div>
-
-  <div class="section"><div class="section-title">Когда нужна срочная медицинская помощь</div><p class="note">Не полагайся на дневник или домашние техники, если головная боль внезапная и чрезвычайно сильная, возникла впервые с такой интенсивностью, сопровождается слабостью или онемением одной стороны тела, нарушением речи, спутанностью сознания, обмороком, судорогами, внезапной потерей зрения, высокой температурой и ригидностью шеи, либо появилась после травмы головы. В таких случаях нужна срочная медицинская оценка. В Украине звони 103 или 112.</p></div>
-</section>
 </main>
 
 <nav class="bottom-nav">
   <button class="nav-item active" id="navForm" onclick="showPage('form')"><span class="nav-icon">＋</span><span>Запись</span></button>
   <button class="nav-item" id="navHistory" onclick="showPage('history')"><span class="nav-icon">▤</span><span>История</span></button>
-  <button class="nav-item" id="navHelp" onclick="showPage('help')"><span class="nav-icon">🌿</span><span>Помощь</span></button>
 </nav>
 
 <div id="modalRoot"></div><div id="toast" class="toast hidden" role="status"></div>
 
 <script>
 const STORAGE_KEY="headacheDiary_v2";
-let attacks=[],customTriggers=[],customMedicines=[],medicineRules=[];
+let attacks=[],customTriggers=[],customMedicines=[];
 let selectedTriggers=[],selectedLocations=[],selectedCharacters=[],selectedSymptoms=[],selectedEffect="";
-let medicationCounter=0,pendingAttack=null,breathTimer=null,breathRunning=false;
+let medicationCounter=0,pendingAttack=null;
 
 const defaultTriggers=["После ночной смены","Недосып","Стресс","Погода","Физическая нагрузка","Голод","Пропуск приёма пищи","Обезвоживание","Менструация","Яркий свет","Сильные запахи","Длительная работа за экраном","Кофеин","Другое"];
 const locations=["Левая лобная область","Правая лобная область","Центр лба","Левый висок","Правый висок","Оба виска","Левый глаз / глазница","Правый глаз / глазница","Область переносицы","Левая теменная область","Правая теменная область","Макушка","Левый затылок","Правый затылок","Центр затылка","Вся голова","Левая половина головы","Правая половина головы","Область лица","Верхняя челюсть","Нижняя челюсть","Шея","Затылок и шея"];
@@ -124,158 +104,304 @@ const defaultMedicines=["Ибупрофен","Цитрамон","Парацет�
 function localDateTime(date=new Date()){const off=date.getTimezoneOffset()*60000;return new Date(date.getTime()-off).toISOString().slice(0,16)}
 function formatDate(value){if(!value)return"Не указано";return new Date(value).toLocaleString("ru-RU",{day:"2-digit",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"})}
 function formatDuration(start,end){if(!start||!end)return"Приступ продолжается";const mins=Math.round((new Date(end)-new Date(start))/60000);if(mins<0)return"Некорректное время";const d=Math.floor(mins/1440),h=Math.floor(mins%1440/60),m=mins%60;return[d?d+" д.":"",h?h+" ч.":"",m||(!d&&!h)?m+" мин.":""].filter(Boolean).join(" ")}
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function loadData(){try{let raw=localStorage.getItem(STORAGE_KEY);let d;if(raw){d=JSON.parse(raw)}else{const legacy=localStorage.getItem("headacheDiary_v1");d=legacy?JSON.parse(legacy):{};if(legacy){attacks=(Array.isArray(d.attacks)?d.attacks:[]).map(a=>({...a,medications:(a.medications||[]).map(m=>({name:m.name||"",time:m.time||"",amount:null,unit:"",doseNote:m.dose||""}))}));customTriggers=Array.isArray(d.customTriggers)?d.customTriggers:[];customMedicines=Array.isArray(d.customMedicines)?d.customMedicines:[];medicineRules=[];persist();return}}attacks=Array.isArray(d.attacks)?d.attacks:[];customTriggers=Array.isArray(d.customTriggers)?d.customTriggers:[];customMedicines=Array.isArray(d.customMedicines)?d.customMedicines:[];medicineRules=Array.isArray(d.medicineRules)?d.medicineRules:[]}catch(e){console.error(e);showToast("Не удалось прочитать сохранённые данные")}}
-function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({attacks,customTriggers,customMedicines,medicineRules}))}catch(e){alert("Не удалось сохранить данные. Экспортируй резервную копию и проверь свободное место.")}}
-function renderChips(id,options,selected,onChange,multiple=true){const box=document.getElementById(id);box.innerHTML="";options.forEach(option=>{const b=document.createElement("button");b.type="button";b.className="chip"+(selected.includes(option)?" active":"");b.textContent=option;b.onclick=()=>{if(multiple){const i=selected.indexOf(option);i>=0?selected.splice(i,1):selected.push(option)}else{selected.splice(0,selected.length);if(!selected.includes(option))selected.push(option)}onChange()};box.appendChild(b)})}
+
+function loadData(){
+  try{
+    let raw=localStorage.getItem(STORAGE_KEY);
+    let d;
+    if(raw){d=JSON.parse(raw)}
+    else{
+      const legacy=localStorage.getItem("headacheDiary_v1");
+      d=legacy?JSON.parse(legacy):{};
+      if(legacy){
+        attacks=(Array.isArray(d.attacks)?d.attacks:[]).map(a=>({...a,medications:(a.medications||[]).map(m=>({name:m.name||"",time:m.time||"",amount:null,unit:"",doseNote:m.dose||""}))}));
+        customTriggers=Array.isArray(d.customTriggers)?d.customTriggers:[];
+        customMedicines=Array.isArray(d.customMedicines)?d.customMedicines:[];
+        persist();
+        return;
+      }
+    }
+    attacks=Array.isArray(d.attacks)?d.attacks:[];
+    customTriggers=Array.isArray(d.customTriggers)?d.customTriggers:[];
+    customMedicines=Array.isArray(d.customMedicines)?d.customMedicines:[];
+  }catch(e){console.error(e);showToast("Не удалось прочитать сохранённые данные")}
+}
+
+function persist(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify({attacks,customTriggers,customMedicines}))
+  }catch(e){alert("Не удалось сохранить данные. Проверь свободное место в памяти устройства.")}
+}
+
+function renderChips(id,options,selected,onChange,multiple=true){
+  const box=document.getElementById(id);
+  box.innerHTML="";
+  options.forEach(option=>{
+    const b=document.createElement("button");
+    b.type="button";
+    b.className="chip"+(selected.includes(option)?" active":"");
+    b.textContent=option;
+    b.onclick=()=>{
+      if(multiple){
+        const i=selected.indexOf(option);
+        i>=0?selected.splice(i,1):selected.push(option);
+      }else{
+        selected.splice(0,selected.length);
+        if(!selected.includes(option))selected.push(option);
+      }
+      onChange();
+    };
+    box.appendChild(b);
+  });
+}
+
 function renderAllChips(){
  const triggerOptions=[...defaultTriggers.filter(x=>x!=="Другое"),...customTriggers,"Другое"];
  renderChips("triggerChips",triggerOptions,selectedTriggers,()=>{renderAllChips();document.getElementById("customTriggerBox").classList.toggle("hidden",!selectedTriggers.includes("Другое"))});
  renderChips("locationChips",locations,selectedLocations,renderAllChips);
  renderChips("characterChips",characters,selectedCharacters,renderAllChips);
  renderChips("symptomChips",symptoms,selectedSymptoms,renderAllChips);
- const effectBox=document.getElementById("effectChips");effectBox.innerHTML="";effects.forEach(effect=>{const b=document.createElement("button");b.type="button";b.className="chip"+(selectedEffect===effect?" active":"");b.textContent=effect;b.onclick=()=>{selectedEffect=selectedEffect===effect?"":effect;renderAllChips()};effectBox.appendChild(b)});
+ const effectBox=document.getElementById("effectChips");
+ effectBox.innerHTML="";
+ effects.forEach(effect=>{
+   const b=document.createElement("button");
+   b.type="button";
+   b.className="chip"+(selectedEffect===effect?" active":"");
+   b.textContent=effect;
+   b.onclick=()=>{selectedEffect=selectedEffect===effect?"":effect;renderAllChips()};
+   effectBox.appendChild(b);
+ });
 }
-function addCustomTrigger(){const el=document.getElementById("customTrigger"),v=el.value.trim();if(!v)return;if(!customTriggers.includes(v))customTriggers.push(v);selectedTriggers=selectedTriggers.filter(x=>x!=="Другое");if(!selectedTriggers.includes(v))selectedTriggers.push(v);el.value="";persist();renderAllChips();document.getElementById("customTriggerBox").classList.add("hidden")}
+
+function addCustomTrigger(){
+  const el=document.getElementById("customTrigger"),v=el.value.trim();
+  if(!v)return;
+  if(!customTriggers.includes(v))customTriggers.push(v);
+  selectedTriggers=selectedTriggers.filter(x=>x!=="Другое");
+  if(!selectedTriggers.includes(v))selectedTriggers.push(v);
+  el.value="";
+  persist();
+  renderAllChips();
+  document.getElementById("customTriggerBox").classList.add("hidden");
+}
+
 function addMedication(){
- const id=++medicationCounter,card=document.createElement("div");card.className="med-card";card.dataset.id=id;
- const head=document.createElement("div");head.className="med-header";const title=document.createElement("strong");title.textContent="Препарат "+id;const del=document.createElement("button");del.className="remove-med";del.type="button";del.textContent="×";del.setAttribute("aria-label","Удалить препарат");del.onclick=()=>card.remove();head.append(title,del);
- const chips=document.createElement("div");chips.className="chips";const name=document.createElement("input");name.type="text";name.placeholder="Название препарата";name.className="med-name";
- [...new Set([...defaultMedicines.filter(x=>x!=="Другое"),...customMedicines,"Другое"])].forEach(n=>{const b=document.createElement("button");b.type="button";b.className="chip small";b.textContent=n;b.onclick=()=>{name.value=n==="Другое"?"":n;chips.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");if(n==="Другое")name.focus()};chips.appendChild(b)});
+ const id=++medicationCounter,card=document.createElement("div");
+ card.className="med-card";
+ card.dataset.id=id;
+ 
+ const head=document.createElement("div");head.className="med-header";
+ const title=document.createElement("strong");title.textContent="Препарат "+id;
+ const del=document.createElement("button");del.className="remove-med";del.type="button";del.textContent="×";del.setAttribute("aria-label","Удалить препарат");
+ del.onclick=()=>card.remove();
+ head.append(title,del);
+ 
+ const chips=document.createElement("div");chips.className="chips";
+ const name=document.createElement("input");name.type="text";name.placeholder="Название препарата";name.className="med-name";
+ 
+ [...new Set([...defaultMedicines.filter(x=>x!=="Другое"),...customMedicines,"Другое"])].forEach(n=>{
+   const b=document.createElement("button");
+   b.type="button";
+   b.className="chip small";
+   b.textContent=n;
+   b.onclick=()=>{
+     name.value=n==="Другое"?"":n;
+     chips.querySelectorAll("button").forEach(x=>x.classList.remove("active"));
+     b.classList.add("active");
+     if(n==="Другое")name.focus();
+   };
+   chips.appendChild(b);
+ });
+ 
  const time=document.createElement("input");time.type="datetime-local";time.className="med-time";time.value=localDateTime();
  const dose=document.createElement("input");dose.type="number";dose.min="0";dose.step="any";dose.placeholder="Количество (например, 1)";dose.className="med-amount";
  const unit=document.createElement("input");unit.type="text";unit.placeholder="Единица (например, таблетка или мг)";unit.className="med-unit";
+ 
  const label1=document.createElement("label");label1.className="field-label";label1.style.marginTop="10px";label1.textContent="Время приёма";
  const label2=document.createElement("label");label2.className="field-label";label2.style.marginTop="10px";label2.textContent="Принятое количество";
  const label3=document.createElement("label");label3.className="field-label";label3.style.marginTop="10px";label3.textContent="Дозировка / примечание (необязательно)";
  const note=document.createElement("input");note.type="text";note.placeholder="Например, 400 мг";note.className="med-dose-note";
- card.append(head,chips,name,label1,time,label2,dose,unit,label3,note);document.getElementById("medications").appendChild(card);
+ 
+ card.append(head,chips,name,label1,time,label2,dose,unit,label3,note);
+ document.getElementById("medications").appendChild(card);
 }
-function collectMedications(){const list=[];document.querySelectorAll(".med-card").forEach(card=>{const name=card.querySelector(".med-name").value.trim();if(!name)return;list.push({name,time:card.querySelector(".med-time").value,amount:card.querySelector(".med-amount").value===""?null:Number(card.querySelector(".med-amount").value),unit:card.querySelector(".med-unit").value.trim(),doseNote:card.querySelector(".med-dose-note").value.trim()});if(!defaultMedicines.includes(name)&&!customMedicines.includes(name))customMedicines.push(name)});return list}
+
+function collectMedications(){
+  const list=[];
+  document.querySelectorAll(".med-card").forEach(card=>{
+    const name=card.querySelector(".med-name").value.trim();
+    if(!name)return;
+    const rawAmount = card.querySelector(".med-amount").value;
+    const parsedAmount = rawAmount==="" ? null : Number(rawAmount);
+    
+    list.push({
+      name,
+      time:card.querySelector(".med-time").value,
+      amount: parsedAmount,
+      unit:card.querySelector(".med-unit").value.trim(),
+      doseNote:card.querySelector(".med-dose-note").value.trim()
+    });
+    if(!defaultMedicines.includes(name)&&!customMedicines.includes(name))customMedicines.push(name);
+  });
+  return list;
+}
+
 function saveAttack(){
  const start=document.getElementById("startTime").value,end=document.getElementById("endTime").value;
  if(!start){alert("Укажи время начала приступа.");return}
  if(end&&new Date(end)<new Date(start)){alert("Окончание не может быть раньше начала.");return}
  const meds=collectMedications();
- for(const m of meds){if(!m.time){alert("Укажи время приёма для препарата "+m.name+".");return}if(m.amount!==null&&(!Number.isFinite(m.amount)||m.amount<=0)){alert("Проверь количество препарата "+m.name+".");return}}
- let triggers=selectedTriggers.filter(x=>x!=="Другое"),custom=document.getElementById("customTrigger").value.trim();if(custom&&!triggers.includes(custom)){triggers.push(custom);if(!customTriggers.includes(custom))customTriggers.push(custom)}
- pendingAttack={id:Date.now().toString()+Math.random().toString(36).slice(2,7),start,end:end||null,triggers,locations:[...selectedLocations],characters:[...selectedCharacters],symptoms:[...selectedSymptoms],intensity:Number(document.getElementById("intensity").value),medications:meds,effect:selectedEffect,notes:document.getElementById("notes").value.trim(),created:new Date().toISOString()};
- const warnings=checkMedicationWarnings(meds);
- if(warnings.length){showWarningModal(warnings);return}
- commitAttack();
-}
-function normalizedName(s){return String(s||"").trim().toLocaleLowerCase("ru-RU")}
-function checkMedicationWarnings(newMeds){
- const warnings=[],allExisting=[];
- attacks.forEach(a=>(a.medications||[]).forEach(m=>allExisting.push({...m,attackId:a.id})));
- const staged=[];
- for(const m of newMeds){
-  const rule=medicineRules.find(r=>normalizedName(r.name)===normalizedName(m.name));
-  if(!rule)continue;
-  const t=new Date(m.time).getTime();if(!Number.isFinite(t))continue;
-  const same=[...allExisting,...staged].filter(x=>normalizedName(x.name)===normalizedName(m.name)&&Number.isFinite(new Date(x.time).getTime()));
-  if(Number(rule.minIntervalHours)>0){
-   const prev=same.map(x=>new Date(x.time).getTime()).filter(x=>x<t).sort((a,b)=>b-a)[0];
-   if(prev!==undefined){const elapsed=(t-prev)/3600000,required=Number(rule.minIntervalHours);if(elapsed<required){const remaining=Math.ceil((required-elapsed)*60);warnings.push(`${m.name}: с предыдущего записанного приёма прошло ${formatHours(elapsed)}. В заданном тобой правиле интервал ${required} ч.; до него ориентировочно ${formatMinutes(remaining)}.`)}}
-  }
-  if(Number(rule.maxAmount)>0&&m.amount!==null){
-   const unit=normalizedName(rule.unit),windowStart=t-24*3600000;
-   const total=same.filter(x=>{const mt=new Date(x.time).getTime();return mt>=windowStart&&mt<=t&&x.amount!==null&&normalizedName(x.unit)===unit}).reduce((s,x)=>s+Number(x.amount||0),0)+Number(m.amount||0);
-   if(total>Number(rule.maxAmount)){warnings.push(`${m.name}: по твоему правилу за скользящие 24 часа получается ${total} ${rule.unit||"ед."} при указанном максимуме ${rule.maxAmount} ${rule.unit||"ед."}.`)}
-  }
-  staged.push(m);
+ for(const m of meds){
+   if(!m.time){alert("Укажи время приёма для препарата "+m.name+".");return}
+   if(m.amount!==null&&(isNaN(m.amount)||m.amount<0)){alert("Проверь корректность количества препарата "+m.name+".");return}
  }
- return warnings;
+ let triggers=selectedTriggers.filter(x=>x!=="Другое"),custom=document.getElementById("customTrigger").value.trim();
+ if(custom&&!triggers.includes(custom)){
+   triggers.push(custom);
+   if(!customTriggers.includes(custom))customTriggers.push(custom);
+ }
+ 
+ const newAttack={
+   id:Date.now().toString()+Math.random().toString(36).slice(2,7),
+   start,
+   end:end||null,
+   triggers,
+   locations:[...selectedLocations],
+   characters:[...selectedCharacters],
+   symptoms:[...selectedSymptoms],
+   intensity:Number(document.getElementById("intensity").value),
+   medications:meds,
+   effect:selectedEffect,
+   notes:document.getElementById("notes").value.trim(),
+   created:new Date().toISOString()
+ };
+ 
+ attacks.unshift(newAttack);
+ persist();
+ resetForm();
+ showToast("Приступ сохранён");
+ renderHistory();
+ showPage("history");
 }
-function formatHours(h){return h.toFixed(1).replace(".",",")+" ч."}
-function formatMinutes(m){return m>=60?Math.floor(m/60)+" ч. "+m%60+" мин.":m+" мин."}
-function showWarningModal(warnings){
- const root=document.getElementById("modalRoot");root.innerHTML="";
- const backdrop=document.createElement("div");backdrop.className="modal-backdrop";
- const modal=document.createElement("div");modal.className="modal";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");
- const h=document.createElement("h2");h.textContent="Проверь запись о лекарствах";
- const intro=document.createElement("p");intro.textContent="Найдены совпадения с правилами, которые ты сама сохранила. Это не медицинская оценка и не подтверждение безопасности.";
- const list=document.createElement("div");list.className="warning";warnings.forEach(w=>{const p=document.createElement("p");p.textContent="⚠️ "+w;list.appendChild(p)});
- const extra=document.createElement("p");extra.className="note";extra.textContent="Проверь инструкцию к конкретному препарату и назначения врача. Запись можно сохранить, даже если предупреждение появилось.";
- const actions=document.createElement("div");actions.className="modal-actions";
- const cancel=document.createElement("button");cancel.className="secondary";cancel.textContent="Отмена / проверить";
- cancel.onclick=()=>{root.innerHTML="";pendingAttack=null};
- const proceed=document.createElement("button");proceed.className="primary";proceed.textContent="Всё равно записать";
- proceed.onclick=()=>{root.innerHTML="";commitAttack()};
- modal.append(h,intro,list,extra,actions);actions.append(cancel,proceed);backdrop.appendChild(modal);root.appendChild(backdrop);
+
+function resetForm(){
+  selectedTriggers=[];selectedLocations=[];selectedCharacters=[];selectedSymptoms=[];selectedEffect="";
+  document.getElementById("startTime").value=localDateTime();
+  document.getElementById("endTime").value="";
+  document.getElementById("notes").value="";
+  document.getElementById("customTrigger").value="";
+  document.getElementById("intensity").value=5;
+  document.getElementById("intensityValue").textContent="5";
+  document.getElementById("intensityHint").textContent=getIntensityText(5);
+  document.getElementById("medications").innerHTML="";
+  document.getElementById("customTriggerBox").classList.add("hidden");
+  renderAllChips();
 }
-function commitAttack(){if(!pendingAttack)return;attacks.unshift(pendingAttack);pendingAttack=null;persist();resetForm();showToast("Приступ сохранён");renderHistory();showPage("history")}
-function resetForm(){selectedTriggers=[];selectedLocations=[];selectedCharacters=[];selectedSymptoms=[];selectedEffect="";document.getElementById("startTime").value=localDateTime();document.getElementById("endTime").value="";document.getElementById("notes").value="";document.getElementById("customTrigger").value="";document.getElementById("intensity").value=5;document.getElementById("intensityValue").textContent="5";document.getElementById("medications").innerHTML="";document.getElementById("customTriggerBox").classList.add("hidden");renderAllChips()}
+
 function renderHistory(){
- const box=document.getElementById("historyList");box.innerHTML="";document.getElementById("totalCount").textContent=attacks.length;
- const avg=attacks.length?attacks.reduce((s,a)=>s+Number(a.intensity||0),0)/attacks.length:0;document.getElementById("averagePain").textContent=attacks.length?avg.toFixed(1)+"/10":"—";
- if(!attacks.length){box.innerHTML='<div class="empty"><div class="empty-icon">☾</div><div>Пока нет записей</div><p>Здесь появится история приступов.</p></div>';return}
+ const box=document.getElementById("historyList");
+ box.innerHTML="";
+ document.getElementById("totalCount").textContent=attacks.length;
+ const avg=attacks.length?attacks.reduce((s,a)=>s+Number(a.intensity||0),0)/attacks.length:0;
+ document.getElementById("averagePain").textContent=attacks.length?avg.toFixed(1)+"/10":"—";
+ 
+ if(!attacks.length){
+   box.innerHTML='<div class="empty"><div class="empty-icon">☾</div><div>Пока нет записей</div><p>Здесь появится история приступов.</p></div>';
+   return;
+ }
+ 
  attacks.forEach(a=>{
   const card=document.createElement("article");card.className="history-card";
   const head=document.createElement("div");head.className="history-head";
   const top=document.createElement("div");top.className="history-top";
   const date=document.createElement("div");date.className="history-date";date.textContent=formatDate(a.start);
-  const score=document.createElement("span");score.className="history-intensity";score.textContent=(a.intensity??"—")+"/10";top.append(date,score);
-  const sub=document.createElement("div");sub.className="history-sub";sub.textContent=(a.locations||[]).join(", ")||"Локализация не указана";head.append(top,sub);
+  const score=document.createElement("span");score.className="history-intensity";score.textContent=(a.intensity??"—")+"/10";
+  top.append(date,score);
+  const sub=document.createElement("div");sub.className="history-sub";sub.textContent=(a.locations||[]).join(", ")||"Локализация не указана";
+  head.append(top,sub);
+  
   const details=document.createElement("div");details.className="history-details hidden";
-  const line=(label,value)=>{const d=document.createElement("div");d.className="detail-line";const s=document.createElement("strong");s.textContent=label;const v=document.createElement("div");v.textContent=value||"Не указано";d.append(s,v);details.appendChild(d)};
-  line("Продолжительность",formatDuration(a.start,a.end));line("Окончание",a.end?formatDate(a.end):"Приступ продолжается");line("Триггеры",(a.triggers||[]).join(", "));line("Локализация",(a.locations||[]).join(", "));line("Характер боли",(a.characters||[]).join(", "));line("Симптомы",(a.symptoms||[]).join(", "));line("Интенсивность",a.intensity+"/10");
+  const line=(label,value)=>{
+    const d=document.createElement("div");d.className="detail-line";
+    const s=document.createElement("strong");s.textContent=label;
+    const v=document.createElement("div");v.textContent=value||"Не указано";
+    d.append(s,v);details.appendChild(d);
+  };
+  line("Продолжительность",formatDuration(a.start,a.end));
+  line("Окончание",a.end?formatDate(a.end):"Приступ продолжается");
+  line("Триггеры",(a.triggers||[]).join(", "));
+  line("Локализация",(a.locations||[]).join(", "));
+  line("Характер боли",(a.characters||[]).join(", "));
+  line("Симптомы",(a.symptoms||[]).join(", "));
+  line("Интенсивность",a.intensity+"/10");
   line("Лекарства",(a.medications||[]).map(m=>`${m.name}${m.amount!==null&&m.amount!==undefined?" · "+m.amount+" "+(m.unit||"ед."):""}${m.doseNote?" · "+m.doseNote:""}${m.time?" · "+formatDate(m.time):""}`).join("; "));
-  line("Эффект",a.effect);line("Заметки",a.notes);
+  line("Эффект",a.effect);
+  line("Заметки",a.notes);
+  
   const actions=document.createElement("div");actions.className="history-actions";
-  const del=document.createElement("button");del.className="danger";del.textContent="Удалить";del.onclick=()=>{if(!confirm("Удалить эту запись?"))return;attacks=attacks.filter(x=>x.id!==a.id);persist();renderHistory();showToast("Запись удалена")};
-  const close=document.createElement("button");close.textContent="Свернуть";close.onclick=()=>details.classList.add("hidden");actions.append(del,close);details.appendChild(actions);
-  head.onclick=()=>details.classList.toggle("hidden");card.append(head,details);box.appendChild(card);
+  const del=document.createElement("button");del.className="danger";del.textContent="Удалить";
+  del.onclick=()=>{if(!confirm("Удалить эту запись?"))return;attacks=attacks.filter(x=>x.id!==a.id);persist();renderHistory();showToast("Запись удалена")};
+  const close=document.createElement("button");close.textContent="Свернуть";
+  close.onclick=()=>details.classList.add("hidden");
+  
+  actions.append(del,close);
+  details.appendChild(actions);
+  head.onclick=()=>details.classList.toggle("hidden");
+  card.append(head,details);
+  box.appendChild(card);
  });
 }
-function exportData(){if(!attacks.length){alert("Нет данных для экспорта.");return}const data={application:"Дневник головной боли",exportDate:new Date().toISOString(),totalAttacks:attacks.length,attacks,medicineRules};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="headache-diary-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
-function showPage(page){["form","history","help"].forEach(p=>{document.getElementById(p+"Page").classList.toggle("hidden",p!==page);document.getElementById("nav"+p[0].toUpperCase()+p.slice(1)).classList.toggle("active",p===page)});if(page==="history")renderHistory();if(page==="help")renderRules();window.scrollTo({top:0,behavior:"instant"})}
-let toastTimer;function showToast(message){const el=document.getElementById("toast");el.textContent=message;el.classList.remove("hidden");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.add("hidden"),2200)}
-function resetChecklist(){document.querySelectorAll("#helpPage input[type=checkbox]").forEach(x=>x.checked=false)}
-function addRule(){medicineRules.push({id:Date.now().toString()+Math.random().toString(36).slice(2,5),name:"",minIntervalHours:"",maxAmount:"",unit:""});persist();renderRules()}
-function renderRules(){
- const box=document.getElementById("medicineRules");if(!box)return;box.innerHTML="";
- if(!medicineRules.length){const p=document.createElement("p");p.className="note";p.textContent="Пока нет настроенных правил. Добавь препарат и перенеси параметры из его официальной инструкции или назначения врача.";box.appendChild(p)}
- medicineRules.forEach((r,i)=>{
-  const card=document.createElement("div");card.className="med-card";
-  const head=document.createElement("div");head.className="med-header";const title=document.createElement("strong");title.textContent="Правило "+(i+1);const del=document.createElement("button");del.className="remove-med";del.textContent="×";del.onclick=()=>{medicineRules.splice(i,1);persist();renderRules()};head.append(title,del);
-  const name=document.createElement("input");name.type="text";name.placeholder="Точное название препарата";name.value=r.name||"";
-  const intervalLabel=document.createElement("label");intervalLabel.className="field-label";intervalLabel.style.marginTop="10px";intervalLabel.textContent="Минимальный интервал, часов (необязательно)";
-  const interval=document.createElement("input");interval.type="number";interval.min="0";interval.step="any";interval.placeholder="Например, значение из инструкции";interval.value=r.minIntervalHours??"";
-  const maxLabel=document.createElement("label");maxLabel.className="field-label";maxLabel.style.marginTop="10px";maxLabel.textContent="Максимум за скользящие 24 часа (необязательно)";
-  const max=document.createElement("input");max.type="number";max.min="0";max.step="any";max.placeholder="Число в выбранных единицах";max.value=r.maxAmount??"";
-  const unitLabel=document.createElement("label");unitLabel.className="field-label";unitLabel.style.marginTop="10px";unitLabel.textContent="Единица измерения";
-  const unit=document.createElement("input");unit.type="text";unit.placeholder="Например, таблетка или мг";unit.value=r.unit||"";
-  [name,interval,max,unit].forEach(el=>el.addEventListener("change",()=>{r.name=name.value.trim();r.minIntervalHours=interval.value===""?"":Number(interval.value);r.maxAmount=max.value===""?"":Number(max.value);r.unit=unit.value.trim();persist()}));
-  card.append(head,name,intervalLabel,interval,maxLabel,max,unitLabel,unit);box.appendChild(card);
- });
+
+function exportData(){
+  if(!attacks.length){alert("Нет данных для экспорта.");return}
+  const data={application:"Дневник головной боли",exportDate:new Date().toISOString(),totalAttacks:attacks.length,attacks};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download="headache-diary-"+new Date().toISOString().slice(0,10)+".json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
 }
-function startBreathing(){if(breathRunning)return;breathRunning=true;let elapsed=0;const total=60;const circle=document.getElementById("breathCircle");const phase=document.getElementById("breathPhase"),count=document.getElementById("breathCount"),status=document.getElementById("breathStatus");document.getElementById("breathStart").disabled=true;
- const tick=()=>{if(!breathRunning)return;const pos=elapsed%10;const inhale=pos<4;phase.textContent=inhale?"Мягкий вдох":"Медленный выдох";count.textContent=(total-elapsed)+" сек.";status.textContent=inhale?"Вдыхай спокойно, без усилия":"Плавно выдыхай, не форсируя дыхание";circle.classList.toggle("expand",inhale);if(elapsed>=total){stopBreathing();phase.textContent="Готово";count.textContent="1 минута";status.textContent="Вернись к обычному дыханию.";return}elapsed++};
- tick();breathTimer=setInterval(tick,1000)}
-function stopBreathing(){breathRunning=false;if(breathTimer)clearInterval(breathTimer);breathTimer=null;const b=document.getElementById("breathStart");if(b)b.disabled=false;const c=document.getElementById("breathCircle");if(c)c.classList.remove("expand");const p=document.getElementById("breathPhase");if(p)p.textContent="Пауза";const n=document.getElementById("breathCount");if(n)n.textContent="Можно остановиться"}
-/* ==========================
-   ПОЛЗУНОК БОЛИ С ХАРАКТЕРОМ
-========================== */
+
+function showPage(page){
+  ["form","history"].forEach(p=>{
+    document.getElementById(p+"Page").classList.toggle("hidden",p!==page);
+    document.getElementById("nav"+p[0].toUpperCase()+p.slice(1)).classList.toggle("active",p===page);
+  });
+  if(page==="history")renderHistory();
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+let toastTimer;
+function showToast(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;
+  el.classList.remove("hidden");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.add("hidden"),2200);
+}
 
 const intensityHints = {
     low: [
-        "1 · Хуйня",
-        "2 · Ну такое, пока слабенько",
-        "3 · О, ну уже хоть что-то"
+        "1 · Еле заметно",
+        "2 · Фоновый дискомфорт",
+        "3 · Терпимо, но неприятно"
     ],
     mid: [
-        "4 · Мммм, херовенько уже, да?",
-        "5 · А сецчас еще хуже?))",
-        "6 · О, а уже весело, ты там только не здыхай пока"
+        "4 · Начинает мешать делам",
+        "5 · Ощутимая боль, нужен отдых",
+        "6 · Сильная боль, тяжело сосредоточиться"
     ],
     high: [
-        "7 · Глаз дёргается, и все бесит? я тоде побешу)))) ",
-        "8 · Ох нихуя, и ты до сих пор жива?",
-        "9 · Ну ебать,почти очко, постарайся, постарайся"
+        "7 · Очень больно, всё раздражает",
+        "8 · Интенсивная боль, сложно терпеть",
+        "9 · Почти невыносимо"
     ],
     extreme: [
-        "10 · Ох ееееба ты киборг-терпила"
+        "10 · Максимальная боль, нужен покой"
     ]
 };
 
@@ -296,11 +422,16 @@ intensityInput.addEventListener("input", e => {
     intensityHint.textContent = getIntensityText(val);
 });
 
-// Инициализация текста при загрузке
 intensityHint.textContent = getIntensityText(Number(intensityInput.value));
 
-loadData();document.getElementById("startTime").value=localDateTime();renderAllChips();renderHistory();renderRules();
-if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(err=>console.warn("Service Worker не зарегистрирован:",err)))}
+loadData();
+document.getElementById("startTime").value=localDateTime();
+renderAllChips();
+renderHistory();
+
+if("serviceWorker" in navigator && location.protocol!=="file:"){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(err=>console.warn("SW error:",err)));
+}
 </script>
 </body>
 </html>
