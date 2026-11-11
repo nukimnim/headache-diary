@@ -62,7 +62,10 @@ textarea{resize:vertical;min-height:68px}
   <div class="section"><div class="section-title">Локализация боли</div><p class="note">Можно выбрать несколько участков.</p><div class="chips" id="locationChips"></div></div>
   <div class="section"><div class="section-title">Характер боли</div><div class="chips" id="characterChips"></div></div>
   <div class="section"><div class="section-title">Сопутствующие симптомы</div><div class="chips" id="symptomChips"></div></div>
-  <div class="section"><div class="section-title">Интенсивность боли</div><div class="range-row"><input type="range" id="intensity" min="1" max="10" value="5"><div class="range-value" id="intensityValue">5</div></div><div class="range-hints"><span>1 · Слабая</span><span>10 · Невыносимая</span></div></div>
+  <div class="section"><div class="section-title">Интенсивность боли</div><div class="range-row"><input type="range" id="intensity" min="1" max="10" value="5"><div class="range-value" id="intensityValue">5</div></div><div class="range-hints" style="justify-content: center; text-align: center;">
+    <span id="intensityHint" style="color: var(--accent); font-weight: 500;">Терпимо, но людей лучше не подпускать</span>
+</div>
+</div>
   <div class="section"><div class="section-title">Приём лекарств</div><div id="medications"></div><button class="add-button" onclick="addMedication()">＋ Добавить обезболивающее</button><p class="note">Записывай фактическое время и количество. Приложение не назначает дозы и не заменяет инструкцию к препарату.</p></div>
   <div class="section"><div class="section-title">Окончание приступа</div><div class="field"><label class="field-label" for="endTime">Когда боль полностью прошла</label><input type="datetime-local" id="endTime"><p class="note">Оставь пустым, если приступ продолжается.</p></div><label class="field-label">Общий эффект лечения</label><div class="chips" id="effectChips"></div></div>
   <div class="section"><div class="section-title">Дополнительные заметки</div><textarea id="notes" placeholder="Необязательно: особенности приступа, обстоятельства..."></textarea></div>
