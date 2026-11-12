@@ -108,7 +108,7 @@
       <input type="number" id="manualSleepHours" step="0.5" min="0" max="24" placeholder="Наприклад: 7.5">
     </div>
     <div class="field">
-      <label class="field-label">Скільки разів прокидалась вночі?</label>
+      <label class="field-label">Скільки прокидалась вночі?</label>
       <input type="number" id="manualNightWakeups" min="0" max="20" value="0">
     </div>
     <button type="button" class="secondary" onclick="saveManualSleep()">Зберегти сон</button>
@@ -131,9 +131,9 @@
       <span id="intensityHint" style="color: var(--accent); font-weight: 500;"></span>
     </div>
   </div>
-  <div class="section"><div class="section-title">Прийом ліків</div><div id="medications"></div><button class="add-button" onclick="addMedication()">＋ Додати знеболювальне</button><p class="note">Записуй фактичний час та кількість. Додаток не призначає дози.</p></div>
-  <div class="section"><div class="section-title">Закінчення нападу</div><div class="field"><label class="field-label" for="endTime">Коли біль повністю минув</label><input type="datetime-local" id="endTime"><p class="note">Залиш порожнім, якщо напад триває.</p></div><label class="field-label">Загальний ефект лікування</label><div class="chips" id="effectChips"></div></div>
-  <div class="section"><div class="section-title">Додаткові нотатки</div><textarea id="notes" placeholder="Необов'язково: особливості нападу, обставини..."></textarea></div>
+  <div class="section"><div class="section-title">Прийом ліків</div><div id="medications"></div><button class="add-button" onclick="addMedication()">＋ Додати знеболювальне</button><p class="note">Записуй фактичний час та кількість.</p></div>
+  <div class="section"><div class="section-title">Закінчення нападу</div><div class="field"><label class="field-label" for="endTime">Біль повністю минув</label><input type="datetime-local" id="endTime"><p class="note">Залиш порожнім, якщо напад триває.</p></div><label class="field-label">Загальний ефект лікування</label><div class="chips" id="effectChips"></div></div>
+  <div class="section"><div class="section-title">Додаткові нотатки</div><textarea id="notes" placeholder="Особливості нападу, обставини..."></textarea></div>
   <button class="primary" id="saveBtn" onclick="saveAttack()">Зберегти напад</button>
   
   <div class="footer-note">© 2026 Кращих друзів на чоловіків не міняємо Inc. Всі права захищені.</div>
@@ -144,7 +144,7 @@
   <div class="section-title">Історія нападів</div><div id="historyList"></div>
   <div class="section"><button class="primary" onclick="exportData()">↓ Експорт данних для лікаря</button><p class="note">Експортуй файл та надсилай лікарю — він відкриється як зручна таблиця з аналітикою тиску, сну та тригерів.</p></div>
   
-  <div class="footer-note">© 2026 Кращих друзів на чоловіків не міняємо Inc. Всі права захищені силою кофеїну</div>
+  <div class="footer-note">© 2026 Кращих друзів на чоловіків не міняємо Inc. Всі права захищені.</div>
 </section>
 </main>
 
@@ -193,7 +193,7 @@ function persist(){
   }catch(e){alert("Не вдалося зберегти дані.")}
 }
 
-/* ==================== ТИХИЙ МОНІТОРИНГ АТМОСФЕРНОГО ТИСКУ ==================== */
+/* МОНІТОРИНГ АТМОСФЕРНОГО ТИСКУ */
 function getDeviceCoords(){
   return new Promise(resolve=>{
     if(!("geolocation" in navigator)){resolve(null);return}
@@ -208,7 +208,7 @@ function getDeviceCoords(){
 async function fetchAtmosphericDataSilently(){
   try{
     const coords=await getDeviceCoords();
-    // Якщо геолокація не надана — використовуємо центральні координати (Київ/Дніпро)
+    // Якщо геолокація не надана — використовуємо центральні координати (Київ/Львів)
     const lat=coords?coords.lat.toFixed(2):"48.51";
     const lon=coords?coords.lon.toFixed(2):"34.61";
     
@@ -248,7 +248,7 @@ async function fetchAtmosphericDataSilently(){
   }
 }
 
-/* ==================== ЛОГІКА ГІБРИДНОГО ТРЕКЕРА СНУ ==================== */
+/* ТРЕКЕР СНУ */
 function startSleep(){
   localStorage.setItem(SLEEP_ACTIVE_KEY,JSON.stringify({start:new Date().toISOString(),wakeups:[]}));
   renderSleepWidget();
