@@ -21,7 +21,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit}
 header{padding:23px 20px 12px;max-width:640px;margin:auto}header h1{font-size:24px;margin:0 0 4px;font-weight:680;letter-spacing:-.45px}header p{margin:0;color:var(--muted);font-size:13px}
 main{padding:8px 15px 25px;max-width:640px;margin:auto}
 .section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:13px}
-.section-title{font-size:16px;font-weight:650;margin-bottom:13px}
+.section-title{font-size:16px;font-weight:650;margin-bottom:13px;display:flex;justify-content:space-between;align-items:center}
 .field{margin-bottom:16px}.field:last-child{margin-bottom:0}
 .field-label{display:block;color:#c8c8ce;font-size:13px;margin-bottom:8px}
 input[type=datetime-local],input[type=text],input[type=number],select,textarea{width:100%;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:11px;padding:12px;min-height:46px;outline:none;color-scheme:dark}
@@ -48,14 +48,76 @@ textarea{resize:vertical;min-height:68px}
 .empty{text-align:center;color:var(--muted);padding:45px 15px}.empty-icon{font-size:34px;margin-bottom:9px}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px}.stat{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px}.stat strong{display:block;font-size:24px;color:var(--accent)}.stat span{font-size:11px;color:var(--muted)}
 .footer-note{text-align:center;color:var(--muted);font-size:12px;margin-top:25px;margin-bottom:10px}
-.modal-backdrop{position:fixed;inset:0;z-index:100;background:#000a;display:flex;align-items:center;justify-content:center;padding:20px}.modal{width:100%;max-width:440px;max-height:85vh;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:17px;padding:18px}.modal h2{font-size:18px;margin:0 0 10px}.modal-actions{display:flex;gap:9px;margin-top:15px}.modal-actions button{flex:1}
 .toast{position:fixed;z-index:120;bottom:calc(95px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#393342;color:white;padding:11px 17px;border-radius:25px;font-size:13px;box-shadow:0 5px 20px #0006;white-space:nowrap}
+
+/* Стилі для блоку сну */
+.sleep-box{background:linear-gradient(145deg, #1f1d28, #19191c);border:1px solid #413854}
+.sleep-btn-row{display:flex;gap:10px;margin-top:10px}
+.sleep-btn-row button{flex:1;padding:12px;border-radius:12px;font-weight:600;font-size:14px;border:1px solid var(--border);background:var(--surface2);transition:0.2s}
+.btn-sleep-start{background:var(--accent-bg)!important;border-color:var(--accent)!important;color:#e0d4f5!important}
+.btn-wake-night{background:#2f2822!important;border-color:var(--yellow)!important;color:var(--yellow)!important}
+.btn-sleep-end{background:#1f2e26!important;border-color:var(--green)!important;color:var(--green)!important}
+.sleep-summary{background:var(--surface2);border-radius:11px;padding:11px 13px;font-size:13px;margin-top:10px;display:flex;justify-content:space-between;align-items:center}
+.auto-sleep-banner{background:#262333;border:1px dashed var(--accent);border-radius:12px;padding:12px;margin-bottom:13px;font-size:13px}
+.auto-sleep-banner-actions{display:flex;gap:8px;margin-top:9px}
+.auto-sleep-banner-actions button{flex:1;padding:8px;border-radius:9px;border:1px solid var(--border);background:var(--surface2);font-size:12px}
+
 @media(max-width:360px){.section{padding:13px}main{padding-left:10px;padding-right:10px}.chip{padding:9px 10px}.nav-item{min-width:75px;padding-inline:6px}}
 </style>
 </head>
 <body>
-<header><h1>Щоденник головного болю</h1><p>Напади, симптоми та стан</p></header>
+<header><h1>Щоденник головного болю</h1><p>Напади, сон та самопочуття</p></header>
 <main>
+
+<!-- Банер автоматичного визначення сну за активністю екрана -->
+<div id="autoSleepBanner" class="auto-sleep-banner hidden">
+  <div id="autoSleepText"></div>
+  <div class="auto-sleep-banner-actions">
+    <button style="background:var(--accent-bg);border-color:var(--accent);color:#e0d4f5" onclick="acceptDetectedSleep()">✓ Так, записати</button>
+    <button onclick="dismissDetectedSleep()">✕ Ігнорувати</button>
+  </div>
+</div>
+
+<!-- Гібридний трекер сну (завжди зверху для швидкого доступу) -->
+<section class="section sleep-box" id="sleepTrackerBox">
+  <div class="section-title">
+    <span>Трекер сну</span>
+    <span id="sleepBadge" style="font-size:12px;color:var(--accent);font-weight:500"></span>
+  </div>
+
+  <!-- Стан 1: Не спить (можна натиснути "Лягаю спати") -->
+  <div id="sleepIdleState">
+    <div id="lastSleepPreview" class="sleep-summary hidden"></div>
+    <div class="sleep-btn-row">
+      <button type="button" class="btn-sleep-start" onclick="startSleep()">🌙 Лягаю спати</button>
+      <button type="button" onclick="toggleManualSleep()">✏️ Внести вручну</button>
+    </div>
+  </div>
+
+  <!-- Стан 2: Режим сну активний (можна відмітити нічне пробудження або прокидання) -->
+  <div id="sleepActiveState" class="hidden">
+    <div class="note" style="margin-top:0;color:#d8d0e8">Таймер сну запущено о <strong id="sleepStartTimeLabel"></strong></div>
+    <div id="nightWakeupsList" class="note" style="color:var(--yellow)"></div>
+    <div class="sleep-btn-row">
+      <button type="button" class="btn-wake-night" onclick="logNightWakeup()">👁️ Прокинулась вночі</button>
+      <button type="button" class="btn-sleep-end" onclick="endSleep()">☀️ Я прокинулась</button>
+    </div>
+  </div>
+
+  <!-- Ручне коригування сну (якщо треба поправити) -->
+  <div id="manualSleepBox" class="hidden" style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px">
+    <div class="field">
+      <label class="field-label">Скільки годин спала?</label>
+      <input type="number" id="manualSleepHours" step="0.5" min="0" max="24" placeholder="Наприклад: 7.5">
+    </div>
+    <div class="field">
+      <label class="field-label">Скільки разів прокидалась вночі?</label>
+      <input type="number" id="manualNightWakeups" min="0" max="20" value="0">
+    </div>
+    <button type="button" class="secondary" onclick="saveManualSleep()">Зберегти сон</button>
+  </div>
+</section>
+
 <section id="formPage">
   <div class="section"><div class="section-title">Новий напад</div><label class="field-label" for="startTime">Дата та час початку</label><input type="datetime-local" id="startTime"></div>
   <div class="section"><div class="section-title">Контекст / тригер</div><div class="chips" id="triggerChips"></div><div id="customTriggerBox" class="hidden field" style="margin-top:12px"><input id="customTrigger" type="text" placeholder="Напиши свій варіант"><button class="secondary" style="margin-top:8px" onclick="addCustomTrigger()">Додати до варіантів</button></div></div>
@@ -94,13 +156,16 @@ textarea{resize:vertical;min-height:68px}
   <button class="nav-item" id="navHistory" onclick="showPage('history')"><span class="nav-icon">▤</span><span>Історія</span></button>
 </nav>
 
-<div id="modalRoot"></div><div id="toast" class="toast hidden" role="status"></div>
+<div id="toast" class="toast hidden" role="status"></div>
 
 <script>
-const STORAGE_KEY="headacheDiary_v4";
-let attacks=[],customTriggers=[],customMedicines=[];
+const STORAGE_KEY="headacheDiary_v5";
+const SLEEP_ACTIVE_KEY="headacheDiary_activeSleep";
+const LAST_ACTIVITY_KEY="headacheDiary_lastSeen";
+
+let attacks=[],sleepLogs=[],customTriggers=[],customMedicines=[];
 let selectedTriggers=[],selectedLocations=[],selectedCharacters=[],selectedSymptoms=[],selectedEffect="";
-let medicationCounter=0,pendingAttack=null;
+let medicationCounter=0,detectedSleepCandidate=null;
 
 const defaultTriggers=["Після нічної зміни","Недосип","Стрес","Погода","Фізичне навантаження","Голод","Пропуск прийому їжі","Зневоднення","Менструація","Яскраве світло","Сильні запахи","Тривала робота за екраном","Кофеїн","Інше"];
 const locations=["Ліва лобна область","Права лобна область","Центр лоба","Ліва скроня","Права скроня","Обидві скроні","Ліве око","Праве око","Область перенісся","Ліва тім'яна область","Права тім'яна область","Макішка","Лівий потилиця","Правий потилиця","Центр потилиці","Вся голова","Ліва половина голови","Права половина голови","Область обличчя","Верхня щелепа","Нижня щелепа","Шия","Потилиця та шия"];
@@ -111,25 +176,15 @@ const defaultMedicines=["Ібупрофен","Цитрамон","Парацет�
 
 function localDateTime(date=new Date()){const off=date.getTimezoneOffset()*60000;return new Date(date.getTime()-off).toISOString().slice(0,16)}
 function formatDate(value){if(!value)return"Не вказано";return new Date(value).toLocaleString("uk-UA",{day:"2-digit",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"})}
+function formatTimeOnly(value){if(!value)return"";return new Date(value).toLocaleTimeString("uk-UA",{hour:"2-digit",minute:"2-digit"})}
 function formatDuration(start,end){if(!start||!end)return"Напад триває";const mins=Math.round((new Date(end)-new Date(start))/60000);if(mins<0)return"Некоректний час";const d=Math.floor(mins/1440),h=Math.floor(mins%1440/60),m=mins%60;return[d?d+" д.":"",h?h+" год.":"",m||(!d&&!h)?m+" хв.":""].filter(Boolean).join(" ")}
 
 function loadData(){
   try{
-    let raw=localStorage.getItem(STORAGE_KEY);
-    let d;
-    if(raw){d=JSON.parse(raw)}
-    else{
-      const legacy=localStorage.getItem("headacheDiary_v3")||localStorage.getItem("headacheDiary_v2")||localStorage.getItem("headacheDiary_v1");
-      d=legacy?JSON.parse(legacy):{};
-      if(legacy){
-        attacks=(Array.isArray(d.attacks)?d.attacks:[]).map(a=>({...a,medications:(a.medications||[]).map(m=>({name:m.name||"",time:m.time||"",amount:null,unit:"",doseNote:m.dose||""}))}));
-        customTriggers=Array.isArray(d.customTriggers)?d.customTriggers:[];
-        customMedicines=Array.isArray(d.customMedicines)?d.customMedicines:[];
-        persist();
-        return;
-      }
-    }
+    let raw=localStorage.getItem(STORAGE_KEY)||localStorage.getItem("headacheDiary_v4");
+    let d=raw?JSON.parse(raw):{};
     attacks=Array.isArray(d.attacks)?d.attacks:[];
+    sleepLogs=Array.isArray(d.sleepLogs)?d.sleepLogs:[];
     customTriggers=Array.isArray(d.customTriggers)?d.customTriggers:[];
     customMedicines=Array.isArray(d.customMedicines)?d.customMedicines:[];
   }catch(e){console.error(e);showToast("Не вдалося прочитати збережені дані")}
@@ -137,27 +192,208 @@ function loadData(){
 
 function persist(){
   try{
-    localStorage.setItem(STORAGE_KEY,JSON.stringify({attacks,customTriggers,customMedicines}))
-  }catch(e){alert("Не вдалося зберегти дані. Перевір вільне місце в пам'яті пристрою.")}
+    localStorage.setItem(STORAGE_KEY,JSON.stringify({attacks,sleepLogs,customTriggers,customMedicines}))
+  }catch(e){alert("Не вдалося зберегти дані.")}
 }
 
+/* ==================== ЛОГІКА ГІБРИДНОГО ТРЕКЕРА СНУ ==================== */
+
+// 1. Ручний таймер + нічні пробудження
+function startSleep(){
+  const session={start:new Date().toISOString(),wakeups:[]};
+  localStorage.setItem(SLEEP_ACTIVE_KEY,JSON.stringify(session));
+  renderSleepWidget();
+  showToast("Солодких снів 🌙");
+}
+
+function logNightWakeup(){
+  const raw=localStorage.getItem(SLEEP_ACTIVE_KEY);
+  if(!raw)return;
+  const session=JSON.parse(raw);
+  session.wakeups.push(new Date().toISOString());
+  localStorage.setItem(SLEEP_ACTIVE_KEY,JSON.stringify(session));
+  renderSleepWidget();
+  showToast("Пробудження зафіксовано");
+}
+
+function endSleep(){
+  const raw=localStorage.getItem(SLEEP_ACTIVE_KEY);
+  if(!raw)return;
+  const session=JSON.parse(raw);
+  const end=new Date().toISOString();
+  const hours=Number(((new Date(end)-new Date(session.start))/3600000).toFixed(1));
+  
+  sleepLogs.unshift({
+    id:Date.now().toString(),
+    start:session.start,
+    end:end,
+    hours:hours,
+    wakeupsCount:session.wakeups.length,
+    wakeupTimes:session.wakeups.map(formatTimeOnly),
+    source:"manual"
+  });
+  
+  localStorage.removeItem(SLEEP_ACTIVE_KEY);
+  persist();
+  renderSleepWidget();
+  showToast(`Доброго ранку! Сон: ${hours} год.`);
+}
+
+function toggleManualSleep(){
+  document.getElementById("manualSleepBox").classList.toggle("hidden");
+}
+
+function saveManualSleep(){
+  const hrs=Number(document.getElementById("manualSleepHours").value);
+  const wakes=Number(document.getElementById("manualNightWakeups").value)||0;
+  if(!hrs||hrs<=0){alert("Вкажи кількість годин сну.");return}
+  
+  sleepLogs.unshift({
+    id:Date.now().toString(),
+    start:null,
+    end:new Date().toISOString(),
+    hours:hrs,
+    wakeupsCount:wakes,
+    wakeupTimes:[],
+    source:"manual-edit"
+  });
+  persist();
+  document.getElementById("manualSleepBox").classList.add("hidden");
+  renderSleepWidget();
+  showToast("Дані про сон збережено");
+}
+
+// 2. Синхронізація через URL-параметри (iOS Команди / Android Tasker)
+// Приклад посилання: ?sleep_hours=7.5&wakeups=1
+function checkUrlSleepSync(){
+  const params=new URLSearchParams(window.location.search);
+  const urlHours=params.get("sleep_hours");
+  if(!urlHours)return;
+
+  const hours=Number(urlHours);
+  const wakeups=Number(params.get("wakeups")||0);
+  
+  // Якщо був активний ручний таймер — закриваємо його на користь точних даних з годинника/телефону
+  localStorage.removeItem(SLEEP_ACTIVE_KEY);
+
+  if(hours>0){
+    sleepLogs.unshift({
+      id:Date.now().toString(),
+      start:null,
+      end:new Date().toISOString(),
+      hours:hours,
+      wakeupsCount:wakeups,
+      wakeupTimes:[],
+      source:"auto-shortcut"
+    });
+    persist();
+    showToast(`Синхронізовано сон: ${hours} год.`);
+  }
+  // Очищаємо URL щоб при оновленні сторінки не дублювалося
+  window.history.replaceState({},document.title,window.location.pathname);
+}
+
+// 3. Розумний детектор сну по активності екрана (страховка)
+function checkScreenInactivitySleep(){
+  const lastSeen=localStorage.getItem(LAST_ACTIVITY_KEY);
+  const now=new Date();
+  localStorage.setItem(LAST_ACTIVITY_KEY,now.toISOString());
+
+  // Якщо вже є активний таймер сну або сон вже записаний за останні 12 годин — не турбуємо
+  if(localStorage.getItem(SLEEP_ACTIVE_KEY))return;
+  if(sleepLogs.length>0 && (now - new Date(sleepLogs[0].end)) < 12*3600000) return;
+
+  if(lastSeen){
+    const lastDate=new Date(lastSeen);
+    const diffHours=(now-lastDate)/3600000;
+    const lastHour=lastDate.getHours();
+    const nowHour=now.getHours();
+
+    // Якщо перерва від 4.5 до 13 годин і захоплює ніч/ранок
+    if(diffHours>=4.5 && diffHours<=13 && (lastHour>=20 || lastHour<=3) && (nowHour>=5 && nowHour<=13)){
+      detectedSleepCandidate={
+        start:lastSeen,
+        end:now.toISOString(),
+        hours:Number(diffHours.toFixed(1))
+      };
+      document.getElementById("autoSleepText").innerHTML=
+        `Ти не відмічала сон. Схоже, ти спала <strong>~${detectedSleepCandidate.hours} год.</strong> (з ${formatTimeOnly(lastSeen)} до ${formatTimeOnly(now)}). Зберегти?`;
+      document.getElementById("autoSleepBanner").classList.remove("hidden");
+    }
+  }
+}
+
+function acceptDetectedSleep(){
+  if(!detectedSleepCandidate)return;
+  sleepLogs.unshift({
+    id:Date.now().toString(),
+    start:detectedSleepCandidate.start,
+    end:detectedSleepCandidate.end,
+    hours:detectedSleepCandidate.hours,
+    wakeupsCount:0,
+    wakeupTimes:[],
+    source:"auto-screen"
+  });
+  persist();
+  dismissDetectedSleep();
+  renderSleepWidget();
+  showToast("Сон збережено");
+}
+
+function dismissDetectedSleep(){
+  detectedSleepCandidate=null;
+  document.getElementById("autoSleepBanner").classList.add("hidden");
+}
+
+function renderSleepWidget(){
+  const rawActive=localStorage.getItem(SLEEP_ACTIVE_KEY);
+  const idleEl=document.getElementById("sleepIdleState");
+  const activeEl=document.getElementById("sleepActiveState");
+  const badge=document.getElementById("sleepBadge");
+
+  if(rawActive){
+    const session=JSON.parse(rawActive);
+    idleEl.classList.add("hidden");
+    activeEl.classList.remove("hidden");
+    badge.textContent="● Спить";
+    document.getElementById("sleepStartTimeLabel").textContent=formatTimeOnly(session.start);
+    
+    const wakesEl=document.getElementById("nightWakeupsList");
+    if(session.wakeups.length>0){
+      wakesEl.textContent=`Пробуджень за ніч: ${session.wakeups.length} (${session.wakeups.map(formatTimeOnly).join(", ")})`;
+    }else{
+      wakesEl.textContent="Нічних пробуджень поки не було";
+    }
+  }else{
+    idleEl.classList.remove("hidden");
+    activeEl.classList.add("hidden");
+    badge.textContent="";
+
+    const preview=document.getElementById("lastSleepPreview");
+    if(sleepLogs.length>0){
+      const last=sleepLogs[0];
+      const wakesInfo=last.wakeupsCount>0?` · пробуджень: ${last.wakeupsCount}`:" · без пробуджень";
+      preview.innerHTML=`<span>Останній сон: <strong>${last.hours} год.</strong>${wakesInfo}</span><span class="muted" style="font-size:11px">${formatTimeOnly(last.end)}</span>`;
+      preview.classList.remove("hidden");
+    }else{
+      preview.classList.add("hidden");
+    }
+  }
+}
+
+// Оновлюємо мітку активності при кожному кліку в додатку
+document.addEventListener("click",()=>localStorage.setItem(LAST_ACTIVITY_KEY,new Date().toISOString()));
+
+/* ==================== РЕШТА ЛОГІКИ ДОДАТКУ ==================== */
+
 function renderChips(id,options,selected,onChange,multiple=true){
-  const box=document.getElementById(id);
-  if(!box)return;
-  box.innerHTML="";
+  const box=document.getElementById(id);if(!box)return;box.innerHTML="";
   options.forEach(option=>{
-    const b=document.createElement("button");
-    b.type="button";
-    b.className="chip"+(selected.includes(option)?" active":"");
-    b.textContent=option;
+    const b=document.createElement("button");b.type="button";
+    b.className="chip"+(selected.includes(option)?" active":"");b.textContent=option;
     b.onclick=()=>{
-      if(multiple){
-        const i=selected.indexOf(option);
-        i>=0?selected.splice(i,1):selected.push(option);
-      }else{
-        selected.splice(0,selected.length);
-        if(!selected.includes(option))selected.push(option);
-      }
+      if(multiple){const i=selected.indexOf(option);i>=0?selected.splice(i,1):selected.push(option)}
+      else{selected.splice(0,selected.length);if(!selected.includes(option))selected.push(option)}
       onChange();
     };
     box.appendChild(b);
@@ -174,10 +410,8 @@ function renderAllChips(){
  if(effectBox){
    effectBox.innerHTML="";
    effects.forEach(effect=>{
-     const b=document.createElement("button");
-     b.type="button";
-     b.className="chip"+(selectedEffect===effect?" active":"");
-     b.textContent=effect;
+     const b=document.createElement("button");b.type="button";
+     b.className="chip"+(selectedEffect===effect?" active":"");b.textContent=effect;
      b.onclick=()=>{selectedEffect=selectedEffect===effect?"":effect;renderAllChips()};
      effectBox.appendChild(b);
    });
@@ -185,25 +419,18 @@ function renderAllChips(){
 }
 
 function addCustomTrigger(){
-  const el=document.getElementById("customTrigger"),v=el.value.trim();
-  if(!v)return;
+  const el=document.getElementById("customTrigger"),v=el.value.trim();if(!v)return;
   if(!customTriggers.includes(v))customTriggers.push(v);
   selectedTriggers=selectedTriggers.filter(x=>x!=="Інше");
   if(!selectedTriggers.includes(v))selectedTriggers.push(v);
-  el.value="";
-  persist();
-  renderAllChips();
-  document.getElementById("customTriggerBox").classList.add("hidden");
+  el.value="";persist();renderAllChips();document.getElementById("customTriggerBox").classList.add("hidden");
 }
 
 function addMedication(){
- const id=++medicationCounter,card=document.createElement("div");
- card.className="med-card";
- card.dataset.id=id;
- 
+ const id=++medicationCounter,card=document.createElement("div");card.className="med-card";card.dataset.id=id;
  const head=document.createElement("div");head.className="med-header";
  const title=document.createElement("strong");title.textContent="Препарат "+id;
- const del=document.createElement("button");del.className="remove-med";del.type="button";del.textContent="×";del.setAttribute("aria-label","Видалити препарат");
+ const del=document.createElement("button");del.className="remove-med";del.type="button";del.textContent="×";
  del.onclick=()=>card.remove();
  head.append(title,del);
  
@@ -211,23 +438,14 @@ function addMedication(){
  const name=document.createElement("input");name.type="text";name.placeholder="Назва препарату";name.className="med-name";
  
  [...new Set([...defaultMedicines.filter(x=>x!=="Інше"),...customMedicines,"Інше"])].forEach(n=>{
-   const b=document.createElement("button");
-   b.type="button";
-   b.className="chip small";
-   b.textContent=n;
-   b.onclick=()=>{
-     name.value=n==="Інше"?"":n;
-     chips.querySelectorAll("button").forEach(x=>x.classList.remove("active"));
-     b.classList.add("active");
-     if(n==="Інше")name.focus();
-   };
+   const b=document.createElement("button");b.type="button";b.className="chip small";b.textContent=n;
+   b.onclick=()=>{name.value=n==="Інше"?"":n;chips.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");if(n==="Інше")name.focus()};
    chips.appendChild(b);
  });
  
  const time=document.createElement("input");time.type="datetime-local";time.className="med-time";time.value=localDateTime();
  const dose=document.createElement("input");dose.type="number";dose.min="0";dose.step="any";dose.placeholder="Кількість (наприклад, 1)";dose.className="med-amount";
  const unit=document.createElement("input");unit.type="text";unit.placeholder="Одиниця (наприклад, таблетка або мг)";unit.className="med-unit";
- 
  const label1=document.createElement("label");label1.className="field-label";label1.style.marginTop="10px";label1.textContent="Час прийому";
  const label2=document.createElement("label");label2.className="field-label";label2.style.marginTop="10px";label2.textContent="Прийнята кількість";
  const label3=document.createElement("label");label3.className="field-label";label3.style.marginTop="10px";label3.textContent="Дозування / примітка (необов'язково)";
@@ -240,18 +458,9 @@ function addMedication(){
 function collectMedications(){
   const list=[];
   document.querySelectorAll(".med-card").forEach(card=>{
-    const name=card.querySelector(".med-name").value.trim();
-    if(!name)return;
-    const rawAmount = card.querySelector(".med-amount").value;
-    const parsedAmount = rawAmount==="" ? null : Number(rawAmount);
-    
-    list.push({
-      name,
-      time:card.querySelector(".med-time").value,
-      amount: parsedAmount,
-      unit:card.querySelector(".med-unit").value.trim(),
-      doseNote:card.querySelector(".med-dose-note").value.trim()
-    });
+    const name=card.querySelector(".med-name").value.trim();if(!name)return;
+    const rawAmount=card.querySelector(".med-amount").value;
+    list.push({name,time:card.querySelector(".med-time").value,amount:rawAmount===""?null:Number(rawAmount),unit:card.querySelector(".med-unit").value.trim(),doseNote:card.querySelector(".med-dose-note").value.trim()});
     if(!defaultMedicines.includes(name)&&!customMedicines.includes(name))customMedicines.push(name);
   });
   return list;
@@ -262,64 +471,41 @@ function saveAttack(){
  if(!start){alert("Вкажи час початку нападу.");return}
  if(end&&new Date(end)<new Date(start)){alert("Закінчення не може бути раніше початку.");return}
  const meds=collectMedications();
- for(const m of meds){
-   if(!m.time){alert("Вкажи час прийому для препарату "+m.name+".");return}
-   if(m.amount!==null&&(isNaN(m.amount)||m.amount<0)){alert("Перевір коректність кількості препарату "+m.name+".");return}
- }
  let triggers=selectedTriggers.filter(x=>x!=="Інше"),custom=document.getElementById("customTrigger").value.trim();
- if(custom&&!triggers.includes(custom)){
-   triggers.push(custom);
-   if(!customTriggers.includes(custom))customTriggers.push(custom);
+ if(custom&&!triggers.includes(custom)){triggers.push(custom);if(!customTriggers.includes(custom))customTriggers.push(custom)}
+
+ // Автоматично прив'язуємо останній записаний сон (якщо він був за останні 24 години)
+ let linkedSleep=null;
+ if(sleepLogs.length>0 && (new Date(start)-new Date(sleepLogs[0].end)) < 24*3600000){
+   linkedSleep={hours:sleepLogs[0].hours,wakeupsCount:sleepLogs[0].wakeupsCount,wakeupTimes:sleepLogs[0].wakeupTimes};
  }
  
- const newAttack={
+ attacks.unshift({
    id:Date.now().toString()+Math.random().toString(36).slice(2,7),
-   start,
-   end:end||null,
-   triggers,
-   locations:[...selectedLocations],
-   characters:[...selectedCharacters],
-   symptoms:[...selectedSymptoms],
-   intensity:Number(document.getElementById("intensity").value),
-   medications:meds,
-   effect:selectedEffect,
-   notes:document.getElementById("notes").value.trim(),
-   created:new Date().toISOString()
- };
+   start,end:end||null,triggers,locations:[...selectedLocations],characters:[...selectedCharacters],symptoms:[...selectedSymptoms],
+   intensity:Number(document.getElementById("intensity").value),medications:meds,effect:selectedEffect,
+   notes:document.getElementById("notes").value.trim(),sleep:linkedSleep,created:new Date().toISOString()
+ });
  
- attacks.unshift(newAttack);
- persist();
- resetForm();
- showToast("Напад збережено");
- showPage("history");
+ persist();resetForm();showToast("Напад збережено");showPage("history");
 }
 
 function resetForm(){
   selectedTriggers=[];selectedLocations=[];selectedCharacters=[];selectedSymptoms=[];selectedEffect="";
-  document.getElementById("startTime").value=localDateTime();
-  document.getElementById("endTime").value="";
-  document.getElementById("notes").value="";
-  document.getElementById("customTrigger").value="";
-  document.getElementById("intensity").value=5;
-  document.getElementById("intensityValue").textContent="5";
+  document.getElementById("startTime").value=localDateTime();document.getElementById("endTime").value="";
+  document.getElementById("notes").value="";document.getElementById("customTrigger").value="";
+  document.getElementById("intensity").value=5;document.getElementById("intensityValue").textContent="5";
   document.getElementById("intensityHint").textContent=getIntensityText(5);
-  document.getElementById("medications").innerHTML="";
-  document.getElementById("customTriggerBox").classList.add("hidden");
+  document.getElementById("medications").innerHTML="";document.getElementById("customTriggerBox").classList.add("hidden");
   renderAllChips();
 }
 
 function renderHistory(){
- const box=document.getElementById("historyList");
- if(!box)return;
- box.innerHTML="";
+ const box=document.getElementById("historyList");if(!box)return;box.innerHTML="";
  document.getElementById("totalCount").textContent=attacks.length;
  const avg=attacks.length?attacks.reduce((s,a)=>s+Number(a.intensity||0),0)/attacks.length:0;
  document.getElementById("averagePain").textContent=attacks.length?avg.toFixed(1)+"/10":"—";
- 
- if(!attacks.length){
-   box.innerHTML='<div class="empty"><div class="empty-icon">☾</div><div>Поки немає записів</div><p>Тут з\'явиться історія нападів.</p></div>';
-   return;
- }
+ if(!attacks.length){box.innerHTML='<div class="empty"><div class="empty-icon">☾</div><div>Поки немає записів</div><p>Тут з\'явиться історія нападів.</p></div>';return}
  
  attacks.forEach(a=>{
   const card=document.createElement("article");card.className="history-card";
@@ -332,75 +518,55 @@ function renderHistory(){
   head.append(top,sub);
   
   const details=document.createElement("div");details.className="history-details hidden";
-  const line=(label,value)=>{
-    const d=document.createElement("div");d.className="detail-line";
-    const s=document.createElement("strong");s.textContent=label;
-    const v=document.createElement("div");v.textContent=value||"Не вказано";
-    d.append(s,v);details.appendChild(d);
-  };
+  const line=(label,value)=>{const d=document.createElement("div");d.className="detail-line";const s=document.createElement("strong");s.textContent=label;const v=document.createElement("div");v.textContent=value||"Не вказано";d.append(s,v);details.appendChild(d)};
+  
+  const sleepText=a.sleep?`${a.sleep.hours} год. (пробуджень вночі: ${a.sleep.wakeupsCount}${a.sleep.wakeupTimes?.length?" о "+a.sleep.wakeupTimes.join(", "):""})`:"Не зафіксовано";
+  line("Сон напередодні",sleepText);
   line("Тривалість",formatDuration(a.start,a.end));
-  line("Закінчення",a.end?formatDate(a.end):"Напад триває");
   line("Тригери",(a.triggers||[]).join(", "));
   line("Локалізація",(a.locations||[]).join(", "));
   line("Характер болю",(a.characters||[]).join(", "));
   line("Симптоми",(a.symptoms||[]).join(", "));
-  line("Інтенсивність",a.intensity+"/10");
-  line("Ліки",(a.medications||[]).map(m=>`${m.name}${m.amount!==null&&m.amount!==undefined?" · "+m.amount+" "+(m.unit||"од."):""}${m.doseNote?" · "+m.doseNote:""}${m.time?" · "+formatDate(m.time):""}`).join("; "));
+  line("Ліки",(a.medications||[]).map(m=>`${m.name}${m.amount!==null&&m.amount!==undefined?" · "+m.amount+" "+(m.unit||"од."):""}`).join("; "));
   line("Ефект",a.effect);
   line("Нотатки",a.notes);
   
   const actions=document.createElement("div");actions.className="history-actions";
   const del=document.createElement("button");del.className="danger";del.textContent="Видалити";
   del.onclick=()=>{if(!confirm("Видалити цей запис?"))return;attacks=attacks.filter(x=>x.id!==a.id);persist();renderHistory();showToast("Запис видалено")};
-  const close=document.createElement("button");close.textContent="Згорнути";
-  close.onclick=()=>details.classList.add("hidden");
-  
-  actions.append(del,close);
-  details.appendChild(actions);
+  const close=document.createElement("button");close.textContent="Згорнути";close.onclick=()=>details.classList.add("hidden");
+  actions.append(del,close);details.appendChild(actions);
   head.onclick=()=>details.classList.toggle("hidden");
-  card.append(head,details);
-  box.appendChild(card);
+  card.append(head,details);box.appendChild(card);
  });
 }
 
 function exportData(){
   if(!attacks.length){alert("Немає даних для експорту.");return}
-  
-  // Формуємо таблицю у форматі CSV (кожна комірка розділена комами або крапкою з комою)
-  let csv = "\uFEFFДата початку;Закінчення;Інтенсивність (з 10);Тригери;Локалізація;Характер болю;Симптоми;Ліки;Ефект;Нотатки\n";
-  
+  let csv = "\uFEFFДата початку;Закінчення;Інтенсивність (з 10);Сон (год);Пробудження вночі;Тригери;Локалізація;Характер болю;Симптоми;Ліки;Ефект;Нотатки\n";
   attacks.forEach(a => {
     const start = a.start ? a.start.replace("T", " ") : "";
     const end = a.end ? a.end.replace("T", " ") : "Триває";
-    const intensity = a.intensity || "";
+    const sHours = a.sleep ? a.sleep.hours : "";
+    const sWakes = a.sleep ? a.sleep.wakeupsCount : "";
     const triggers = (a.triggers || []).join(", ");
     const locations = (a.locations || []).join(", ");
     const characters = (a.characters || []).join(", ");
     const symptoms = (a.symptoms || []).join(", ");
     const meds = (a.medications || []).map(m => `${m.name} (${m.amount || ""} ${m.unit || ""})`).join("; ");
-    const effect = a.effect || "";
-    const notes = (a.notes || "").replace(/(\r\n|\n|\r)/gm, " "); // прибираємо переноси рядків у нотатках
-    
-    csv += `"${start}","${end}","${intensity}","${triggers}","${locations}","${characters}","${symptoms}","${meds}","${effect}","${notes}"\n`;
+    const notes = (a.notes || "").replace(/(\r\n|\n|\r)/gm, " ");
+    csv += `"${start}","${end}","${a.intensity||""}","${sHours}","${sWakes}","${triggers}","${locations}","${characters}","${symptoms}","${meds}","${a.effect||""}","${notes}"\n`;
   });
-
   const blob = new Blob([csv], {type: "text/csv;charset=utf-8;"});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "shodennik-boli-" + new Date().toISOString().slice(0, 10) + ".csv";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1500);
+  const a = document.createElement("a");a.href = url;a.download = "shodennik-boli-" + new Date().toISOString().slice(0, 10) + ".csv";
+  document.body.appendChild(a);a.click();a.remove();
 }
 
 function showPage(page){
   ["form","history"].forEach(p=>{
-    const pEl = document.getElementById(p+"Page");
-    const nEl = document.getElementById("nav"+p[0].toUpperCase()+p.slice(1));
-    if(pEl) pEl.classList.toggle("hidden", p !== page);
-    if(nEl) nEl.classList.toggle("active", p === page);
+    document.getElementById(p+"Page").classList.toggle("hidden", p !== page);
+    document.getElementById("nav"+p[0].toUpperCase()+p.slice(1)).classList.toggle("active", p === page);
   });
   if(page==="history") renderHistory();
   window.scrollTo({top:0,behavior:"instant"});
@@ -408,64 +574,25 @@ function showPage(page){
 
 let toastTimer;
 function showToast(message){
-  const el=document.getElementById("toast");
-  if(!el)return;
-  el.textContent=message;
-  el.classList.remove("hidden");
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.add("hidden"),2200);
+  const el=document.getElementById("toast");if(!el)return;el.textContent=message;el.classList.remove("hidden");
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.add("hidden"),2500);
 }
 
-const intensityHints = {
-    low: [
-        "1 · Ледь помітно",
-        "2 · Фоновий дискомфорт",
-        "3 · Терпимо, але неприємно"
-    ],
-    mid: [
-        "4 · Починає заважати справам",
-        "5 · Відчутний біль, потрібен відпочинок",
-        "6 · Сильний біль, важко зосередитися"
-    ],
-    high: [
-        "7 · Дуже боляче, все дратує",
-        "8 · Інтенсивний біль, складно терпити",
-        "9 · Майже нестерпно"
-    ],
-    extreme: [
-        "10 · Максимальний біль, потрібен спокій"
-    ]
-};
+const intensityHints = {low:["1 · Ледь помітно","2 · Фоновий дискомфорт","3 · Терпимо"],mid:["4 · Починає заважати","5 · Відчутний біль","6 · Сильний біль"],high:["7 · Дуже боляче","8 · Інтенсивний біль","9 · Майже нестерпно"],extreme:["10 · Максимальний біль"]};
+function getIntensityText(val){if(val<=3)return intensityHints.low[val-1];if(val<=6)return intensityHints.mid[val-4];if(val<=9)return intensityHints.high[val-7];return intensityHints.extreme[0]}
 
-function getIntensityText(val) {
-    if (val <= 3) return intensityHints.low[val - 1];
-    if (val <= 6) return intensityHints.mid[val - 4];
-    if (val <= 9) return intensityHints.high[val - 7];
-    return intensityHints.extreme[0];
-}
+const intensityInput=document.getElementById("intensity");
+if(intensityInput){intensityInput.addEventListener("input",e=>{const val=Number(e.target.value);document.getElementById("intensityValue").textContent=val;document.getElementById("intensityHint").textContent=getIntensityText(val)})}
 
-const intensityInput = document.getElementById("intensity");
-const intensityValue = document.getElementById("intensityValue");
-const intensityHint = document.getElementById("intensityHint");
-
-if(intensityInput){
-  intensityInput.addEventListener("input", e => {
-      const val = Number(e.target.value);
-      if(intensityValue) intensityValue.textContent = val;
-      if(intensityHint) intensityHint.textContent = getIntensityText(val);
-  });
-}
-
+// Ініціалізація
 loadData();
-const startTimeInput = document.getElementById("startTime");
-if(startTimeInput) startTimeInput.value=localDateTime();
+checkUrlSleepSync();
+checkScreenInactivitySleep();
+renderSleepWidget();
+document.getElementById("startTime").value=localDateTime();
 renderAllChips();
 renderHistory();
-if(intensityHint && intensityInput) intensityHint.textContent = getIntensityText(Number(intensityInput.value));
-
-if("serviceWorker" in navigator && location.protocol!=="file:"){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(err=>console.warn("SW error:",err)));
-}
+document.getElementById("intensityHint").textContent=getIntensityText(5);
 </script>
 </body>
 </html>
