@@ -209,8 +209,8 @@ async function fetchAtmosphericDataSilently(){
   try{
     const coords=await getDeviceCoords();
     // Якщо геолокація не надана — використовуємо центральні координати (Київ/Львів)
-    const lat=coords?coords.lat.toFixed(2):"48.51";
-    const lon=coords?coords.lon.toFixed(2):"34.61";
+    const lat=coords?coords.lat.toFixed(2):"49.84";
+    const lon=coords?coords.lon.toFixed(2):"24.03";
     
     const controller=new AbortController();
     const timer=setTimeout(()=>controller.abort(),3500);
